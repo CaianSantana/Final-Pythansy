@@ -8,7 +8,12 @@ precisamos de um loop no servidor
 
 Seguinte precisamos de um protocolo para este projeto.
 
+<h2>Run pip install websockets<h2>
+
+
 <H1>Rastle protocol</H1>
+
+
 
 cada letra deve simbolizar um evento
 
@@ -19,3 +24,5 @@ H -> hit ou acerto formato "H de:{Id de quem acertou} to:{Id de quem foi acertad
 M -> movimento nao sei como fazer isso mas os jogadores tem que que manter suas telas atualizadas com as posicoes dos jogadores
 
 F -> fim de jogo servidor manda pros clientes fecha a conexao e envia "F -> {você venceu}" ou "F -> {você perdeu}"
+
+tem algumas coisas que nos permitem usar Json pode facilitar a comunicacao

@@ -6,7 +6,7 @@ from websockets.sync.client import connect
 async def hello():
     with connect("ws://localhost:8080") as websocket:
         while(True):
-            websocket.send("Hello world!")
+            websocket.send("J receba")
             message = websocket.recv()
             print(f"Received: {message}")
             await asyncio.sleep(1)
