@@ -2,6 +2,7 @@ from Settings.Configuration import *
 from Settings.Main import Main
 
 pygame.init()
+
 mainGame = Main()
 while True:
     for event in pygame.event.get():
@@ -9,6 +10,8 @@ while True:
             mainGame.gameOver()
         if event.type == SCREEN_UPDATE:
             mainGame.update()
+        mainGame.keyInput(event)
+        
     
     screen.fill("Black")
     mainGame.draw()     
