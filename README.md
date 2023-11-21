@@ -6,6 +6,8 @@
 Para criar o jogo, devemos concluir certas etapas que estarão listadas a seguir. Trocar o "- [ ] " por "- [X] " quando concluir algum item da lista.
 
 ### Etapa artistica:
+***Sprites dos personagens devem ser .png e ter a seguinte resolução de imagem: 80x131****
+*Inimigos maiores são excessão
 
 * Escolher Tema do jogo
     - [ ]  Feito
