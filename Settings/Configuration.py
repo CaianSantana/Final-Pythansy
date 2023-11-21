@@ -1,8 +1,8 @@
 import pygame
 
-cellSize = 64
-cellNumberX = 20
-cellNumberY = 11.25
+cellSize = 80
+cellNumberX = 16
+cellNumberY = 9
 
 screenWidth = cellSize * cellNumberX
 screenHeight = int(cellSize * cellNumberY)

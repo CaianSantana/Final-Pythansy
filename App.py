@@ -4,6 +4,8 @@ from Settings.Main import Main
 pygame.init()
 
 mainGame = Main()
+
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -13,8 +15,8 @@ while True:
         mainGame.keyInput(event)
         
     
-    screen.fill("Black")
-    mainGame.draw()     
+    screen.fill((175, 215, 70))
+    mainGame.draw()  
     pygame.display.update()
     clock.tick(60)   
     
