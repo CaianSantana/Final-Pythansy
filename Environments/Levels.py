@@ -1,0 +1,1 @@
+levelDict = {"Forest": "Final-Pythansy/Graphics/Scenario.png"} #fonte: https://www.pixilart.com/art/traveled-path-8fb71335a1682f9?ft=staff-picks
