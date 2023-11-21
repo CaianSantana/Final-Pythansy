@@ -5,7 +5,7 @@ pygame.init()
 
 mainGame = Main()
 scenarioRect = pygame.Rect(0, 0, screenWidth, screenHeight)
-scenario = pygame.image.load("Graphics/Scenario.png").convert_alpha()
+scenario = pygame.image.load("Final-Pythansy/Graphics/Scenario.png").convert_alpha()
 #fonte: https://www.pixilart.com/art/traveled-path-8fb71335a1682f9?ft=staff-picks
 
 while True:

@@ -1,14 +1,14 @@
 import sys
 from .Configuration import screen, pygame
 from .InputBox import InputBox
-from Models.Character import Character
+from Models.Mage import Mage
 
 #input = InputBox(570, 376, 140, 32)  -- Teste de inputbox
 
 class Main:
     
     def __init__(self):
-        self.char = Character(3, 5)
+        self.char = Mage(3, 5)
         pass
     
     def update(self):
