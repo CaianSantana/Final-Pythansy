@@ -9,7 +9,10 @@ from Environments.Scenario import Scenario
 class Main:
     
     def __init__(self):
-        self.char = Mage(3, 5)
+        self.char1 = Mage(3, 5)
+        self.char2 = Mage(6, 5)
+        self.char2.armor = 2
+        self.char1.doBasicAttack(self.char2)
         self.scenario = Scenario("Forest")
         pass
     
@@ -20,7 +23,8 @@ class Main:
         pass
     def draw(self):
         self.scenario.draw()
-        self.char.draw()
+        self.char1.draw()
+        self.char2.draw()
         #input.draw(screen)
         
     def gameOver(self):
