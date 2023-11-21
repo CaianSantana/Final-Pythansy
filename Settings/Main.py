@@ -8,7 +8,7 @@ from Models.Character import Character
 class Main:
     
     def __init__(self):
-        self.char = Character(4, 4)
+        self.char = Character(3, 5)
         pass
     
     def update(self):

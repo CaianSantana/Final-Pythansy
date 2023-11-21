@@ -4,7 +4,9 @@ from Settings.Main import Main
 pygame.init()
 
 mainGame = Main()
-
+scenarioRect = pygame.Rect(0, 0, screenWidth, screenHeight)
+scenario = pygame.image.load("Graphics/Scenario.png").convert_alpha()
+#fonte: https://www.pixilart.com/art/traveled-path-8fb71335a1682f9?ft=staff-picks
 
 while True:
     for event in pygame.event.get():
@@ -15,7 +17,7 @@ while True:
         mainGame.keyInput(event)
         
     
-    screen.fill((175, 215, 70))
+    screen.blit(scenario, scenarioRect)
     mainGame.draw()  
     pygame.display.update()
     clock.tick(60)   

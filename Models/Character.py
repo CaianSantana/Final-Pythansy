@@ -15,6 +15,7 @@ class Character():
         self.y = y
         self.pos = Vector2(self.x, self.y)
         self.sprite = pygame.image.load("Graphics/BlackMage.png").convert_alpha()
+        #fonte: https://www.pngkey.com/maxpic/u2e6q8r5i1y3y3u2/
         
     def draw(self):
         
