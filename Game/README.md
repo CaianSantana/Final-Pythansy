@@ -1,6 +1,6 @@
 # Final Pythansy
 
-<<<<<<<< HEAD:Game/README.md
+
 ========
 Precisamos implementar que ele seja Dual Thread com seus clientes
 
@@ -30,7 +30,6 @@ F -> fim de jogo servidor manda pros clientes fecha a conexao e envia "F -> {voc
 
 tem algumas coisas que nos permitem usar Json pode facilitar a comunicacao
 
->>>>>>>> branch2:README.md
 
 ## To-Do List
 
