@@ -3,18 +3,17 @@ from Settings.Configuration import screen, pygame
 from Settings.InputBox import InputBox
 from Models.Mage import Mage
 from Environments.Scenario import Scenario
+from Environments.Combat import Combat
 
 #input = InputBox(570, 376, 140, 32)  -- Teste de inputbox
 
 class Main:
     
     def __init__(self):
-        
-        self.char1 = Mage(4, 5)
-        self.char2 = Mage(11, 5)
-        self.char2.sprite = pygame.transform.flip(self.char2.sprite, True, False) 
-        self.chars = [self.char1, self.char2]
-        self.char2.armor = 2
+        self.chars = [Mage(4, 5), Mage(11, 5)]
+        self.combat = Combat(self.chars)
+        self.chars[1].sprite = pygame.transform.flip(self.chars[1].sprite, True, False) 
+        self.chars[1].armor = 2
         self.cont = 0
         
         self.scenario = Scenario("Forest")
@@ -25,7 +24,7 @@ class Main:
             char.update()
         pass
     def keyInput(self): 
-        self.char1.defineTarget(self.char2)
+        #for char in self.combat.order:
         pass
     def draw(self):
         self.scenario.draw()
