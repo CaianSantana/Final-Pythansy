@@ -10,7 +10,7 @@ class Mage(Character):
         self.mana = 5
         self.ability = 2
         self.MagicResistance = 1
-        self.sprite = pygame.image.load("Final-Pythansy/Graphics/BlackMage.png").convert_alpha()
+        self.sprite = pygame.image.load("Final-Pythansy/Game/Graphics/BlackMage.png").convert_alpha()
         #fonte: https://www.pngkey.com/maxpic/u2e6q8r5i1y3y3u2/
         
     def draw(self):
