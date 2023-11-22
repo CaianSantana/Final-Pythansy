@@ -16,7 +16,13 @@ cada letra deve simbolizar um evento
 
 J -> Pedido para jogar deve seguir o formato "J {nome do jogador}\0"
 
-H -> hit ou acerto formato "H de:{Id de quem acertou} to:{Id de quem foi acertado} Dano:{quantidade}"
+A -> aceito -> devolve o id do player
+
+H -> hit ou acerto formato "H from:{Id de quem acertou} to:{Id do boneco do inimigo} Dano:{quantidade}"
+
+E -> fim da jogada fez todas as suas ações ou escolheu terminar
+
+T -> {Numero do turno} diz pros clientes quem possui o turno no momento 
 
 F -> fim de jogo servidor manda pros clientes fecha a conexao e envia "F -> {você venceu}" ou "F -> {você perdeu}"
 
@@ -43,7 +49,7 @@ Para criar o jogo, devemos concluir certas etapas que estarão listadas a seguir
 ***Seguir princípios SOLID*** 
 
 - [ ]  Estabelescer conexão com servidor quando o jogo iniciar
-- [ ]  Capacidade de salvar progresso
+- [ ]  Capacidade de salvar progresso -> melhor mudar para um sistema de torneio continuo desafiante 1 2 e 3
 
 #### Etapa de Menu:
 
