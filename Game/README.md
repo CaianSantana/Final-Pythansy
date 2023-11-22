@@ -1,5 +1,36 @@
 # Final Pythansy
 
+<<<<<<<< HEAD:Game/README.md
+========
+Precisamos implementar que ele seja Dual Thread com seus clientes
+
+Cada player Mantem sua conexao viva ate o fim do jogo reutiliza aquele socket
+
+precisamos de um loop no servidor
+
+Seguinte precisamos de um protocolo para este projeto.
+
+<h2>Run pip install websockets<h2>
+
+<H1>Rastle protocol</H1>
+
+cada letra deve simbolizar um evento
+
+J -> Pedido para jogar deve seguir o formato "J {nome do jogador}\0"
+
+A -> aceito -> devolve o id do player
+
+H -> hit ou acerto formato "H from:{Id de quem acertou} to:{Id do boneco do inimigo} Dano:{quantidade}"
+
+E -> fim da jogada fez todas as suas ações ou escolheu terminar
+
+T -> {Numero do turno} diz pros clientes quem possui o turno no momento 
+
+F -> fim de jogo servidor manda pros clientes fecha a conexao e envia "F -> {você venceu}" ou "F -> {você perdeu}"
+
+tem algumas coisas que nos permitem usar Json pode facilitar a comunicacao
+
+>>>>>>>> branch2:README.md
 
 ## To-Do List
 
@@ -23,7 +54,7 @@ Para criar o jogo, devemos concluir certas etapas que estarão listadas a seguir
 ***Seguir princípios SOLID*** 
 
 - [ ]  Estabelescer conexão com servidor quando o jogo iniciar
-- [ ]  Capacidade de salvar progresso
+- [ ]  Capacidade de salvar progresso -> melhor mudar para um sistema de torneio continuo desafiante 1 2 e 3
 
 #### Etapa de Menu:
 
