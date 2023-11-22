@@ -22,6 +22,6 @@ class Combat:
         index = next(iter(self.order))
         self.order.pop(index)
         self.order[index] = self.turn
-        print(self.turn)
-        print(next(iter(self.order)))
+        self.turn.occupied = True
+        return self.turn
         

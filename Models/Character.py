@@ -20,7 +20,7 @@ class Character():
         self.rect = self.pos
         self.target = None
         self.side = None
-        #self.turn = False
+        self.occupied = False
         
     def draw(self):
         pass
@@ -43,11 +43,12 @@ class Character():
         
     def doSomething(self):
         self.doBasicAttack()
-        #self.isInOriginalPos()
+        
     
-    """def isInOriginalPos(self):
+    def isInOriginalPos(self):
         if self.pos.x == self.x and self.pos.y == self.y:
-            self.turn = False"""
+            self.occupied = False
+            print(self.occupied)
         
     def move(self):
         if self.target != None:
@@ -74,6 +75,7 @@ class Character():
                     self.pos.y-=1
                 elif self.pos.y > self.y:
                     self.pos.y+=1
+                self.isInOriginalPos()
         
     def getSide(self):
         if self.x < cellNumberX/2:

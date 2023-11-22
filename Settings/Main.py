@@ -12,10 +12,11 @@ class Main:
     def __init__(self):
         self.chars = [Mage(4, 5), Mage(11, 5)]
         self.combat = Combat(self.chars)
+        self.combat.nextTurn()
         self.chars[1].sprite = pygame.transform.flip(self.chars[1].sprite, True, False) 
         self.chars[1].armor = 2
         self.cont = 0
-        
+        self.contAction = 1
         self.scenario = Scenario("Forest")
         pass
     
@@ -24,8 +25,14 @@ class Main:
             char.update()
         pass
     def keyInput(self): 
-        self.combat.nextTurn()
-        pass
+        if self.combat.turn.occupied and self.contAction > 0:
+            print("Turno de "+ str(self.combat.turn)+" iniciado")
+            self.combat.turn.defineTarget(self.combat.order.get(next(iter(self.combat.order))))
+            self.contAction-= 1
+        elif self.combat.turn.occupied == False:
+            self.combat.nextTurn()
+            self.contAction = 1
+       
     def draw(self):
         self.scenario.draw()
         for char in self.chars:
