@@ -19,7 +19,7 @@ class Character():
         self.speed = 1
         self.rect = self.pos
         self.target = None
-        self.side = None
+        self.side = self.getSide()
         self.occupied = False
         
     def draw(self):
@@ -29,7 +29,11 @@ class Character():
         pass
     
     def defineTarget(self, target):
-        self.target = target
+        if target != None:
+            if target.side != self.side:
+                self.target = target
+        else:
+            self.target = None
     
     def doBasicAttack(self):
         print("Atacando o alvo para causar "+str(self.attack)+" de dano fisico")
@@ -43,7 +47,6 @@ class Character():
         
     def doSomething(self):
         self.doBasicAttack()
-        
     
     def isInOriginalPos(self):
         if self.pos.x == self.x and self.pos.y == self.y:
@@ -95,7 +98,3 @@ class Character():
         if self.health <= 0:
             #Lógica de morte, provavelmente teremos de atribuir estado de vivo ou morto para o character
             pass
-        
-    
-        
-        

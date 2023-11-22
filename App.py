@@ -15,9 +15,6 @@ while True:
             mainGame.update()
         if event.type == pygame.KEYDOWN:
             mainGame.keyInput()
-        
-    
-    
     mainGame.draw()  
     pygame.display.update()
     clock.tick(60)   

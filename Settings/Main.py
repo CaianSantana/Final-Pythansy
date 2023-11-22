@@ -27,7 +27,14 @@ class Main:
     def keyInput(self): 
         if self.combat.turn.occupied and self.contAction > 0:
             print("Turno de "+ str(self.combat.turn)+" iniciado")
-            self.combat.turn.defineTarget(self.combat.order.get(next(iter(self.combat.order))))
+            nextItem = iter(self.combat.order)
+            for i in enumerate(self.chars):
+                print(nextItem)
+                nextChar = self.combat.order.get(next(nextItem))
+                print(nextChar.side)
+                if self.combat.turn.side != nextChar.side:
+                    self.combat.turn.defineTarget(nextChar)
+                    break
             self.contAction-= 1
         elif self.combat.turn.occupied == False:
             self.combat.nextTurn()
