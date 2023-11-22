@@ -18,10 +18,10 @@ class Combat:
         return order
 
     def nextTurn(self):
-        self.turn = next(iter(self.order))
-        char = self.order.get(self.turn)
-        self.order.pop(self.turn)
-        self.order[self.turn] = char
+        self.turn = self.order.get(next(iter(self.order)))
+        index = next(iter(self.order))
+        self.order.pop(index)
+        self.order[index] = self.turn
         print(self.turn)
         print(next(iter(self.order)))
         
