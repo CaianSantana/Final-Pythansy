@@ -24,7 +24,7 @@ class Main:
             char.update()
         pass
     def keyInput(self): 
-        #for char in self.combat.order:
+        self.combat.nextTurn()
         pass
     def draw(self):
         self.scenario.draw()

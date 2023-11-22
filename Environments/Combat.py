@@ -5,20 +5,23 @@ class Combat:
         self.listOfChars = listOfChars
         self.running = True
         self.order = self.setOrder()
-        #self.turn = self.order[0]
+        self.turn = 0
                 
     def setOrder(self):
         order = {}
         inits = []
         for index, char in enumerate(self.listOfChars):
             inits.append(char.speed+random.randint(1, 20))
-            print(inits[index])
         inits.sort()
         for index, init in enumerate(inits):
             order[init] = self.listOfChars[index]
-        print(order.keys())
-        print(order.items())
-        #dict(sorted(order.keys(), key=lambda item: item[1]))
-        
         return order
+
+    def nextTurn(self):
+        self.turn = next(iter(self.order))
+        char = self.order.get(self.turn)
+        self.order.pop(self.turn)
+        self.order[self.turn] = char
+        print(self.turn)
+        print(next(iter(self.order)))
         
