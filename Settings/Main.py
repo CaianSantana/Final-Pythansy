@@ -10,40 +10,45 @@ from Environments.Combat import Combat
 class Main:
     
     def __init__(self):
-        self.chars = [Mage(4, 5), Mage(11, 5), Mage(2, 6), Mage(13, 6)]
-        self.combat = Combat(self.chars)
+        self.playerChars = [Mage(4, 6)] #, Mage(2, 6)
+        self.enemychars = [Mage(11, 6)] #, Mage(13, 6)
+        self.totalChars = self.playerChars + self.enemychars
+        self.totalChars[0].health = 2
+        self.totalChars[1].health = 2
+        self.combat = Combat(self.playerChars, self.enemychars)
         self.combat.nextTurn()
-        self.chars[1].sprite = pygame.transform.flip(self.chars[1].sprite, True, False) 
-        self.chars[3].sprite = pygame.transform.flip(self.chars[3].sprite, True, False) 
-        self.chars[1].armor = 2
+        for char in self.enemychars:
+            char.sprite = pygame.transform.flip(char.sprite, True, False) 
         self.cont = 0
         self.contAction = 1
         self.scenario = Scenario("Forest")
         pass
     
     def update(self):
-        for char in self.chars:
+        for char in self.totalChars:
             char.update()
+            
         pass
     def keyInput(self): 
-        if self.combat.turn.occupied and self.contAction > 0:
-            print("Turno de "+ str(self.combat.turn)+" iniciado")
-            nextItem = iter(self.combat.order)
-            for i in enumerate(self.chars):
-                print(nextItem)
-                nextChar = self.combat.order.get(next(nextItem))
-                print(nextChar.side)
-                if self.combat.turn.side != nextChar.side:
-                    self.combat.turn.defineTarget(nextChar)
-                    break
-            self.contAction-= 1
-        elif self.combat.turn.occupied == False:
-            self.combat.nextTurn()
-            self.contAction = 1
+        if self.combat.running == True:
+            if self.combat.turn.occupied and self.contAction > 0:
+                print("Turno de "+ str(self.combat.turn)+" iniciado")
+                nextItem = iter(self.combat.order)
+                for i in enumerate(self.totalChars):
+                    nextChar = self.combat.order.get(next(nextItem))
+                    if self.combat.turn.side != nextChar.side:
+                        self.combat.turn.defineTarget(nextChar)
+                        break
+                self.contAction-= 1
+            elif self.combat.turn.occupied == False:
+                self.combat.nextTurn()
+                self.contAction = 1
+        else:
+            print("Combate finalizado.")
        
     def draw(self):
         self.scenario.draw()
-        for char in self.chars:
+        for char in self.totalChars:
             char.draw()
         #input.draw(screen)
         

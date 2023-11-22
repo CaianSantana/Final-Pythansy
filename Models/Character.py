@@ -21,12 +21,20 @@ class Character():
         self.target = None
         self.side = self.getSide()
         self.occupied = False
+        self.live = True
         
     def draw(self):
         pass
     
     def getInput(self):
         pass
+    
+    def die(self):
+        self.live = False
+        colorImage = pygame.Surface(self.sprite.get_size()).convert_alpha()
+        colorImage.fill((47,79,79))
+        self.sprite.blit(colorImage, (0,0), special_flags = pygame.BLEND_RGBA_MULT)
+        self.sprite = pygame.transform.rotate(self.sprite, 90) 
     
     def defineTarget(self, target):
         if target != None:
@@ -51,7 +59,6 @@ class Character():
     def isInOriginalPos(self):
         if self.pos.x == self.x and self.pos.y == self.y:
             self.occupied = False
-            print(self.occupied)
         
     def move(self):
         if self.target != None:
@@ -70,7 +77,6 @@ class Character():
                 self.doSomething()
                 self.defineTarget(None)
         else:
-            
             if self.pos.x != self.x or self.pos.y != self.y:
                 if self.side == Side.LEFT:
                     self.pos.x-=1
@@ -98,5 +104,6 @@ class Character():
         print(str(damage)+" de dano sofrido")
         print(str(self.health)+" de vida restante")
         if self.health <= 0:
-            #Lógica de morte, provavelmente teremos de atribuir estado de vivo ou morto para o character
+            print("Morreu.")
+            self.die()
             pass
