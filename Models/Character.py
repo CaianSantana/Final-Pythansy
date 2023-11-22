@@ -61,10 +61,11 @@ class Character():
                     self.pos.x+=1
                 elif self.side == Side.RIGHT:
                     self.pos.x-=1
-                if yRelation>0:
-                    self.pos.y-=1
-                elif yRelation<0:
-                    self.pos.y+=1
+                if self.pos.x == cellNumberX/2:    
+                    if yRelation>0:
+                        self.pos.y-=1
+                    elif yRelation<0:
+                        self.pos.y+=1
             else:
                 self.doSomething()
                 self.defineTarget(None)
@@ -75,10 +76,11 @@ class Character():
                     self.pos.x-=1
                 elif self.side == Side.RIGHT:
                     self.pos.x+=1
-                if self.pos.y < self.y:
-                    self.pos.y+=1
-                elif self.pos.y > self.y:
-                    self.pos.y-=1
+                if self.pos.x == cellNumberX/2:
+                    if self.pos.y < self.y:
+                        self.pos.y+=1
+                    elif self.pos.y > self.y:
+                        self.pos.y-=1
                 self.isInOriginalPos()
         
     def getSide(self):
