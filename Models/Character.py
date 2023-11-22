@@ -66,15 +66,16 @@ class Character():
                 self.doSomething()
                 self.defineTarget(None)
         else:
+            
             if self.pos.x != self.x or self.pos.y != self.y:
                 if self.side == Side.LEFT:
                     self.pos.x-=1
                 elif self.side == Side.RIGHT:
                     self.pos.x+=1
                 if self.pos.y < self.y:
-                    self.pos.y-=1
-                elif self.pos.y > self.y:
                     self.pos.y+=1
+                elif self.pos.y > self.y:
+                    self.pos.y-=1
                 self.isInOriginalPos()
         
     def getSide(self):

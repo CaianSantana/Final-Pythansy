@@ -10,7 +10,7 @@ from Environments.Combat import Combat
 class Main:
     
     def __init__(self):
-        self.chars = [Mage(4, 5), Mage(11, 5)]
+        self.chars = [Mage(4, 5), Mage(11, 5), Mage(2, 6)]
         self.combat = Combat(self.chars)
         self.combat.nextTurn()
         self.chars[1].sprite = pygame.transform.flip(self.chars[1].sprite, True, False) 
