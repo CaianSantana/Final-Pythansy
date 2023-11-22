@@ -12,6 +12,7 @@ class Main:
         
         self.char1 = Mage(4, 5)
         self.char2 = Mage(11, 5)
+        self.char2.sprite = pygame.transform.flip(self.char2.sprite, True, False) 
         self.chars = [self.char1, self.char2]
         self.char2.armor = 2
         self.cont = 0
