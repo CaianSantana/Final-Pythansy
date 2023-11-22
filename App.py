@@ -13,7 +13,8 @@ while True:
             mainGame.gameOver()
         if event.type == SCREEN_UPDATE:
             mainGame.update()
-        mainGame.keyInput(event)
+        if event.type == pygame.KEYDOWN:
+            mainGame.keyInput()
         
     
     

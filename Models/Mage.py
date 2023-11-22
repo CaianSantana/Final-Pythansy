@@ -14,5 +14,5 @@ class Mage(Character):
         #fonte: https://www.pngkey.com/maxpic/u2e6q8r5i1y3y3u2/
         
     def draw(self):
-        charRect = pygame.Rect(self.pos.x*cellSize, self.pos.y*cellSize, cellSize, cellSize)
-        screen.blit(self.sprite, charRect)
+        self.rect = pygame.Rect(self.pos.x*cellSize, self.pos.y*cellSize, cellSize, cellSize)
+        screen.blit(self.sprite, self.rect)

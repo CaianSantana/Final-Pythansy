@@ -1,7 +1,8 @@
 import pygame
 from pygame.math import Vector2
-from Settings.Configuration import screen, cellSize
+from Settings.Configuration import cellNumberX, cellSize
 from Models.Damage import Damage
+from Models.Side import Side
 
 class Character():
     
@@ -15,16 +16,70 @@ class Character():
         self.ability = 0
         self.armor = 0
         self.MagicResistance = 0
+        self.speed = 1
+        self.rect = self.pos
+        self.target = None
+        self.side = None
+        #self.turn = False
         
     def draw(self):
         pass
     
-    
-    def doBasicAttack(self, target):
-        print("Atacando o alvo para causar "+str(self.attack)+" de dano fisico")
-        target.receiveDamage(self.attack, Damage.PHYSICAL)
+    def getInput(self):
         pass
     
+    def defineTarget(self, target):
+        self.target = target
+    
+    def doBasicAttack(self):
+        print("Atacando o alvo para causar "+str(self.attack)+" de dano fisico")
+        self.target.receiveDamage(self.attack, Damage.PHYSICAL)
+        pass
+        
+    def update(self):
+        self.getInput()
+        self.getSide()
+        self.move()
+        
+    def doSomething(self):
+        self.doBasicAttack()
+        #self.isInOriginalPos()
+    
+    """def isInOriginalPos(self):
+        if self.pos.x == self.x and self.pos.y == self.y:
+            self.turn = False"""
+        
+    def move(self):
+        if self.target != None:
+            if self.pos.x < self.target.x-1 or self.pos.x > self.target.x+1:
+                yRelation = self.pos.y - self.target.y
+                if self.side == Side.LEFT:
+                    self.pos.x+=1
+                elif self.side == Side.RIGHT:
+                    self.pos.x-=1
+                if yRelation>0:
+                    self.pos.y-=1
+                elif yRelation<0:
+                    self.pos.y+=1
+            else:
+                self.doSomething()
+                self.defineTarget(None)
+        else:
+            if self.pos.x != self.x or self.pos.y != self.y:
+                if self.side == Side.LEFT:
+                    self.pos.x-=1
+                elif self.side == Side.RIGHT:
+                    self.pos.x+=1
+                if self.pos.y < self.y:
+                    self.pos.y-=1
+                elif self.pos.y > self.y:
+                    self.pos.y+=1
+        
+    def getSide(self):
+        if self.x < cellNumberX/2:
+            self.side = Side.LEFT
+        else:
+            self.side = Side.RIGHT
     
     def receiveDamage(self, damage, type):
         if type == Damage.PHYSICAL:
