@@ -72,7 +72,7 @@ Para criar o jogo, devemos concluir certas etapas que estarão listadas a seguir
     - [ ]   Colocar os sprites do mapa 
 
 * classe Personagem:    
-    - [ ]   Possuir atributos de vida, dano, velocidade e etc
+    - [x]   Possuir atributos de vida, dano, velocidade e etc
     - [ ]   Possuir uma forma de "função"(ex.: Mago, Guerreiro)
 
 * classe Jogador: 
@@ -81,17 +81,17 @@ Para criar o jogo, devemos concluir certas etapas que estarão listadas a seguir
 * classe Combate:
     - [ ]   Possuir objeto do tipo Jogador
     - [ ]   Possuir objeto do tipo inimigos
-    - [ ]   Deve ser capaz de dizer quando o combate terminar
+    - [x]   Deve ser capaz de dizer quando o combate terminar
 
 
 * classe Main:
-    - [ ]   Possuir as regras gerais do jogo conforme personagens, inimigos e combate
+    - [x]   Possuir as regras gerais do jogo conforme personagens, inimigos e combate
 
 * classe App:
-    - [ ]   Possuir o método rodar que utiliza uma instância da classe main para fazer o jogo funcionar
+    - [x]   Possuir o método rodar que utiliza uma instância da classe main para fazer o jogo funcionar
 
 * classe Configuração:
-    - [ ] Possuir as configurações gerais do jogo, que podem ser utilizadas por todas as outras classes do jogo
+    - [x] Possuir as configurações gerais do jogo, que podem ser utilizadas por todas as outras classes do jogo
 
 
 
