@@ -1,5 +1,7 @@
 # Final Pythansy
 
+<<<<<<<< HEAD:Game/README.md
+========
 Precisamos implementar que ele seja Dual Thread com seus clientes
 
 Cada player Mantem sua conexao viva ate o fim do jogo reutiliza aquele socket
@@ -28,12 +30,15 @@ F -> fim de jogo servidor manda pros clientes fecha a conexao e envia "F -> {voc
 
 tem algumas coisas que nos permitem usar Json pode facilitar a comunicacao
 
+>>>>>>>> branch2:README.md
 
 ## To-Do List
 
 Para criar o jogo, devemos concluir certas etapas que estarão listadas a seguir. Trocar o "- [ ] " por "- [X] " quando concluir algum item da lista.
 
 ### Etapa artistica:
+***Sprites dos personagens devem ser .png e ter a seguinte resolução de imagem: 80x131****
+*Inimigos maiores são excessão
 
 * Escolher Tema do jogo
     - [ ]  Feito
