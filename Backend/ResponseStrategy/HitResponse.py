@@ -10,6 +10,6 @@ class HitResponse(Response):
         self.idHitTaker = idHitTaker
     
     async def messageSender(self, websocket):
-        await websocket.send("U {self.id}")
+        await websocket.send("U " + str(self.id))
     
     
