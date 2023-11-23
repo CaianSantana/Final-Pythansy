@@ -12,8 +12,8 @@ from CombatMechanics.HUD import HUD
 class Main:
     
     def __init__(self):
-        self.playerChars = [Wizard(3, 3.5), Wizard(1, 3.5), Wizard(5, 3.5)] #, 
-        self.enemychars = [Wizard(10, 3.5), Wizard(12, 3.5), Wizard(14, 3.5)] #, Wizard(13, 6)
+        self.playerChars = [Wizard(3, 4), Wizard(1, 4), Wizard(5, 4)]
+        self.enemychars = [Wizard(10, 4), Wizard(12, 4), Wizard(14, 4)] 
         self.totalChars = self.playerChars + self.enemychars
         self.totalChars[0].health = 4
         self.totalChars[2].health = 4
