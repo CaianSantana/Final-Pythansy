@@ -16,3 +16,9 @@ class Chars:
         self.magicResistance = magic
         self.speed = speed
         pass
+    
+    def recebaDano(self, dano):
+        self.hp = self.hp - dano
+        
+    def causeDano(self, PlayerPy, dano):
+        PlayerPy.recebaDano(dano)
