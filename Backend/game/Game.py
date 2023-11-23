@@ -8,7 +8,6 @@ class Game:
     
     def join(self,playerPy:PlayerPy):
         playerPy.setId = len(self.playersPy) 
-        print("join")
         self.playersPy.append(playerPy)
         print(len(self.playersPy))
         
