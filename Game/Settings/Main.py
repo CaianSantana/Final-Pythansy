@@ -39,7 +39,7 @@ class Main:
                         self.combat.running = False
                     if self.combat.verifyTeam(self.combat.turn) and not self.combat.verifyTeam(nextChar) and not nextChar.state == States.DEAD or not self.combat.verifyTeam(self.combat.turn) and self.combat.verifyTeam(nextChar) and not nextChar.state == States.DEAD:
                         self.combat.turn.defineTarget(nextChar)
-                        self.combat.turn.state = States.READY
+                        self.combat.turn.state = States.CONJURING
                         break
             elif self.combat.turn.state == States.IDLE or self.combat.turn.state == States.DEAD:
                 self.combat.nextTurn()
