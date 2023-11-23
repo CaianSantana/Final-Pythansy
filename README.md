@@ -16,13 +16,20 @@ Seguinte precisamos de um protocolo para este projeto.
 
 cada letra deve simbolizar um evento
 
-J -> Pedido para jogar deve seguir o formato "J {nome do jogador}\0"
 
-A -> aceito -> devolve o id do player
+<h3>Para o Server</h3>
+
+J -> Pedido para jogar deve seguir o formato "J {nome do jogador}\0"
 
 H -> hit ou acerto formato "H from:{Id de quem acertou} to:{Id do boneco do inimigo} Dano:{quantidade}"
 
 E -> fim da jogada fez todas as suas ações ou escolheu terminar
+
+<h3>Para o Cliente</h3>
+
+A -> significa aceito -> devolve o id do player formato "A {id}"
+
+U -> update -> "U from {id de quem fez a ação} to {id de quem foi afetado} dano{+00}" sim dois digitos sempre, com sinal claro
 
 T -> {Numero do turno} diz pros clientes quem possui o turno no momento 
 
