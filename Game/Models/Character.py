@@ -1,6 +1,6 @@
 import pygame
 from pygame.math import Vector2
-from Settings.Configuration import cellNumberX, cellSize
+from Settings.Configuration import cellNumberX
 from Models.Damage import Damage
 from Models.States import States
 
@@ -20,6 +20,7 @@ class Character():
         self.rect = self.pos
         self.target = None
         self.state = States.IDLE
+        self.sprite = None
         
     def draw(self):
         pass
@@ -34,6 +35,9 @@ class Character():
     def update(self):
         self.getInput()
         self.move()
+        self.act()
+    
+    def act(self):
         self.doBasicAttack()
     
     def doBasicAttack(self):
@@ -44,11 +48,6 @@ class Character():
             self.target.receiveDamage(self.attack, Damage.PHYSICAL)
             self.state = States.RETREATING
         pass
-        
-    
-        
-    def doSomething(self):
-        self.doBasicAttack()
     
     def isInOriginalPos(self):
         if self.pos.x == self.x and self.pos.y == self.y:
@@ -93,14 +92,15 @@ class Character():
         print(str(damage)+" de dano sofrido")
         print(str(self.health)+" de vida restante")
         if self.health <= 0:
-            print("Morreu.")
             self.die()
             pass
+        
     
     def die(self):
+        print("Morreu.")
         self.state = States.DEAD
         colorImage = pygame.Surface(self.sprite.get_size()).convert_alpha()
-        colorImage.fill((47,79,79))
+        colorImage.fill((47,47,47))
         self.sprite.blit(colorImage, (0,0), special_flags = pygame.BLEND_RGBA_MULT)
         if self.x > cellNumberX/2:
             self.sprite = pygame.transform.rotate(self.sprite, -90) 

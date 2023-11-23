@@ -8,5 +8,6 @@ class States(Enum):
     RETREATING = 4
     READY = 5
     MELEE = 6
-    CONJURING = 7
+    RANGED = 7
+    CONJURING = 8
     

@@ -36,32 +36,14 @@ class Main:
                 nextItem = iter(self.combat.order)
                 for i in enumerate(self.totalChars):
                     nextChar = self.combat.order.get(next(nextItem))
-                    print("Ainda não Passou")
                     if self.combat.verifyTeam(self.combat.turn) and not self.combat.verifyTeam(nextChar) or not self.combat.verifyTeam(self.combat.turn) and self.combat.verifyTeam(nextChar):
-                        print("Passou")
                         self.combat.turn.defineTarget(nextChar)
-                        self.combat.turn.state = States.READY
+                        self.combat.turn.state = States.CONJURING
                         break
-            elif self.combat.turn.state == States.IDLE:
+            elif self.combat.turn.state == States.IDLE or self.combat.turn.state == States.DEAD:
                 self.combat.nextTurn()
         else:
             print("Combate finalizado.")
-        
-        """ if self.combat.running == True:
-            if self.combat.turn.occupied and self.contAction > 0:
-                print("Turno de "+ str(self.combat.turn)+" iniciado")
-                nextItem = iter(self.combat.order)
-                for i in enumerate(self.totalChars):
-                    nextChar = self.combat.order.get(next(nextItem))
-                    if self.combat.turn.side != nextChar.side:
-                        self.combat.turn.defineTarget(nextChar)
-                        break
-                self.contAction-= 1
-            elif self.combat.turn.occupied == False:
-                self.combat.nextTurn()
-                self.contAction = 1
-        else:
-            print("Combate finalizado.")"""
        
        
     def draw(self):
