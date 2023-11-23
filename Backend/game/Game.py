@@ -12,12 +12,15 @@ class Game:
         pass
     
     def join(self,playerPy:PlayerPy):
+        playerPy.setId = len(self.playersPy) 
         self.playersPy.append(playerPy)
         
     def hit(self, message):
         playerId = int(message[7])
         playerTargetId = int(message[13])
-        
+        atacante = self.playersPy[playerId]
+        atacado = self.playersPy[playerTargetId]
+        atacante.causeDano(atacado,10)
         return
     
     def playerJaEstaEmPartida(self,websocket)-> bool:
