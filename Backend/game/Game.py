@@ -1,25 +1,29 @@
 from playerManagement.PlayerPy import PlayerPy
+from MessageHanlder.MessageHandler import MessageHandler
 
 class Game:
     playersPy :list[PlayerPy] = []
+    messageHandler:MessageHandler = None
     
     def __init__(self) -> None:
         pass
     
-    def join(self,playerPy:PlayerPy):
+    def join(self,conexao):
+        if(self.playerJaEstaEmPartida(conexao)):    
+            return    
+        playerPy = PlayerPy("playerName", conexao)
         playerPy.setId = len(self.playersPy) 
         self.playersPy.append(playerPy)
         print(len(self.playersPy))
-        
-        
+           
     def hit(self, message):
         playerId = int(message[7])
         playerTargetId = int(message[13])
         print(len(self.playersPy))
         atacante = self.playersPy[playerId]
         atacado = self.playersPy[playerTargetId]
-        atacante.causeDano(atacado,10)
-        print(atacado.hp)
+        #atacante.causeDano(atacado,10)
+        print("atacado.hp")
         return
     
     def playerJaEstaEmPartida(self,websocket)-> bool:
@@ -33,8 +37,11 @@ class Game:
             return len(self.playersPy)==2
         return False
         
-        
+    def setMessageHandler(self, messageHandler):
+        self.messageHandler = messageHandler
     
-    
+    def handleMessage(self, websocket,message):
+        print("lidei com a mensagem")
+        self.messageHandler.handleMessage(websocket,message)
         
     
