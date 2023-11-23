@@ -6,21 +6,21 @@ class Game:
     def __init__(self) -> None:
         pass
     
-    def __init__(self, playerPy:PlayerPy) -> None:
-        self.playersPy.append(playerPy)
-        playerPy.setId = len(self.playersPy)
-        pass
-    
     def join(self,playerPy:PlayerPy):
         playerPy.setId = len(self.playersPy) 
+        print("join")
         self.playersPy.append(playerPy)
+        print(len(self.playersPy))
+        
         
     def hit(self, message):
         playerId = int(message[7])
         playerTargetId = int(message[13])
+        print(len(self.playersPy))
         atacante = self.playersPy[playerId]
         atacado = self.playersPy[playerTargetId]
         atacante.causeDano(atacado,10)
+        print(atacado.hp)
         return
     
     def playerJaEstaEmPartida(self,websocket)-> bool:
@@ -30,7 +30,9 @@ class Game:
         return False
     
     def limiteDeJogadoresAtingido(self) -> bool:
-        return len(self.playersPy)==2
+        if(self.playersPy != None):
+            return len(self.playersPy)==2
+        return False
         
         
     
