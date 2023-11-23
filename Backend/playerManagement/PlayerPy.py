@@ -15,3 +15,6 @@ class PlayerPy:
         
     def getChar(self,id:int) -> Chars: 
         return self.personagens[id]
+    
+    def addChar(self,char:Chars):
+        self.personagens.append(char)
