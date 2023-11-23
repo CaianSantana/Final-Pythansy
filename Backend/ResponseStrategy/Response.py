@@ -9,4 +9,4 @@ class Response:
         pass
     
     async def messageSender(self, websocket):
-        await websocket.send("A {self.id}")
+        await websocket.send("A " + str(self.id))
