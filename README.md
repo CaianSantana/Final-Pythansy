@@ -21,7 +21,9 @@ cada letra deve simbolizar um evento
 
 J -> Pedido para jogar deve seguir o formato "J {nome do jogador}\0"
 
-H -> hit ou acerto formato "H from:{Id de quem acertou} to:{Id do boneco do inimigo} Dano:{quantidade}"
+C -> caracters 
+
+H -> hit ou acerto formato "H from:{Id de quem acertou} to:{Id do boneco do inimigo} Dano:{+00}"
 
 E -> fim da jogada fez todas as suas ações ou escolheu terminar
 
