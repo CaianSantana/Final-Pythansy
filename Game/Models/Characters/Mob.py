@@ -32,8 +32,9 @@ class Mob():
             self.countFlash-=1
         elif self.state == States.DEAD:
             colorImage = pygame.Surface(self.sprite.get_size()).convert_alpha()
-            colorImage.fill((47,47,47))
+            colorImage.fill((0,0,0, 0))
             self.sprite.blit(colorImage, (0,0), special_flags = pygame.BLEND_RGBA_MULT)
+            del self
         else:
             self.sprite = self.spriteNormal
         pass

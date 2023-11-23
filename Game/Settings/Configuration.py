@@ -5,7 +5,7 @@ cellNumberX = 16
 cellNumberY = 9
 
 screenWidth = cellSize * cellNumberX
-screenHeight = int(cellSize * cellNumberY)
+screenHeight = cellSize * cellNumberY
 
 screen = pygame.display.set_mode((screenWidth, screenHeight))
 clock = pygame.time.Clock()
