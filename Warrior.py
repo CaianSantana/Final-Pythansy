@@ -36,20 +36,14 @@ class Warrior(Character):
     
         
     def act(self):
+        self.resetStas()
         self.doBasicAttack()
     
-    def block(self):
+    def block(self,atack,damageType):
         if self.state == States.DEFENDING:
             self.armor+=1
-            if self.projectile is None:
-                self.projectile = Projectile(self.x+1, self.y+0.5, "Fireball", self.target)
-                print("Lança uma bola de energia no alvo para causar "+str(self.ability)+" de dano mágico")
-            if self.projectile == True:
-                self.projectile = None
-                self.target.receiveDamage(self.ability, Damage.MAGICAL)
-                self.mana-=1
-                self.state = States.IDLE
-                self.armor=-1
+            print("Bloqueando ataque "+str(atack)+" de dano ")
+            self.receiveDamage(atack, damageType)
         elif self.state == States.CONJURING and self.mana<=0:
             self.state = States.IDLE
         pass
@@ -59,7 +53,11 @@ class Warrior(Character):
             self.state = States.MARCHING
         if self.state == States.MELEE:
             print("Dando ataque poderoso para causar "+str(self.attack+1)+" de dano fisico")
-            self.target.receiveDamage(self.attack, Damage.PHYSICAL)
+            self.target.receiveDamage(self.attack+1, Damage.PHYSICAL)
             self.state = States.RETREATING
             self.armor=-1
+        pass
+
+    def resetStas(self):
+        self.armor=2
         pass
