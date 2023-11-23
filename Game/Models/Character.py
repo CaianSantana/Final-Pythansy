@@ -57,9 +57,9 @@ class Character():
         if self.state == States.MARCHING:
             if self.pos.x < self.target.x-1 or self.pos.x > self.target.x+1:
                 yRelation = self.pos.y - self.target.y
-                if self.x < cellNumberX/2:
+                if self.isLeft():
                     self.pos.x+=1
-                elif self.x > cellNumberX/2:
+                elif not self.isLeft():
                     self.pos.x-=1
                 if self.pos.x == cellNumberX/2:    
                     if yRelation>0:
@@ -71,9 +71,9 @@ class Character():
                 self.defineTarget(None)
         elif self.state == States.RETREATING:
             if self.pos.x != self.x or self.pos.y != self.y:
-                if self.x < cellNumberX/2:
+                if self.isLeft():
                     self.pos.x-=1
-                elif self.x > cellNumberX/2:
+                elif not self.isLeft():
                     self.pos.x+=1
                 if self.pos.x == cellNumberX/2:
                     if self.pos.y < self.y:
@@ -82,6 +82,11 @@ class Character():
                         self.pos.y-=1
                 self.isInOriginalPos()
         
+    
+    def isLeft(self):
+        if self.x < cellNumberX/2:
+            return True
+        return False
     
     def receiveDamage(self, damage, type):
         if type == Damage.PHYSICAL:
@@ -102,7 +107,7 @@ class Character():
         colorImage = pygame.Surface(self.sprite.get_size()).convert_alpha()
         colorImage.fill((47,47,47))
         self.sprite.blit(colorImage, (0,0), special_flags = pygame.BLEND_RGBA_MULT)
-        if self.x > cellNumberX/2:
+        if not self.isLeft():
             self.sprite = pygame.transform.rotate(self.sprite, -90) 
         else:
             self.sprite = pygame.transform.rotate(self.sprite, 90) 

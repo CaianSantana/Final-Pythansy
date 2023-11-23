@@ -18,8 +18,6 @@ class Main:
         self.totalChars[2].health = 4
         self.combat = Combat(self.playerChars, self.enemychars)
         self.combat.nextTurn()
-        for char in self.enemychars:
-            char.sprite = pygame.transform.flip(char.sprite, True, False) 
         self.cont = 0
         self.scenario = Scenario("Forest")
         pass
