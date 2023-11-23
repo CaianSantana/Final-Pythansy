@@ -1,10 +1,12 @@
 import random
+from Models.States import States
+
 
 class Combat:
-    def __init__(self, playerChars, enemychars):
-        self.playerChars = playerChars
-        self.enemychars = enemychars
-        self.listOfTotalChars = playerChars + enemychars
+    def __init__(self, leftTeam, rightTeam):
+        self.leftTeam = leftTeam
+        self.rightTeam = rightTeam
+        self.listOfTotalChars = leftTeam + rightTeam
         self.running = True
         self.order = self.setOrder()
         self.turn = 0
@@ -20,15 +22,14 @@ class Combat:
         return order
 
     def verifyLife(self):
-        if(len(self.order) <= len(self.listOfTotalChars)/2):
-            if(len(self.playerChars) <1):
-                print("Inimigo venceu.")
-                self.running = False
-                return -1
-            elif(len(self.enemychars) <1):
-                print("Jogador venceu.")
-                self.running = False
-                return -2
+        if(len(self.leftTeam) <1):
+            print("Lado direito venceu.")
+            self.running = False
+            return -1
+        elif(len(self.rightTeam) <1):
+            print("Lado esquerdo venceu.")
+            self.running = False
+            return -2
 
     def nextTurn(self):
         self.verifyLife()
@@ -36,14 +37,19 @@ class Combat:
             self.turn = self.order.get(next(iter(self.order)))
             index = next(iter(self.order))
             self.order.pop(index)
-            if self.turn.live == True:
+            if self.turn.state != States.DEAD:
                 self.order[index] = self.turn
-                self.turn.occupied = True
+                self.turn.state = States.ACTING
                 return self.turn
             else:
-                if self.turn in self.playerChars:
-                    self.playerChars.remove(self.turn)
+                if self.verifyTeam(self.turn):
+                    self.leftTeam.remove(self.turn)
                 else:
-                    self.enemychars.remove(self.turn)
+                    self.rightTeam.remove(self.turn)
                 return self.nextTurn()
         
+    def verifyTeam(self, char):
+        if char in self.leftTeam:
+            return True
+        else:
+            return False
