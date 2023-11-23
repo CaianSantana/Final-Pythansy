@@ -2,19 +2,25 @@ import asyncio
 from websockets.server import serve
 from playerManagement.PlayerPy import PlayerPy
 from game.Game import Game
+from ResponseStrategy.Response import Response
+from ResponseStrategy.HitResponse import HitResponse
+
 
 funcoes = {}
 game:Game = Game()
 
 #Padrao de assinatura de toda funcao deve ser este a seguir {Negociavel de passar conexao algo a ser analisado}
-def join(conexao, playerName)-> PlayerPy:
+def join(conexao, playerName)-> Response:
     if(not game.playerJaEstaEmPartida(conexao)):    
         player = PlayerPy(playerName, conexao)
         game.join(player)
-    return player
+        response:Response = Response(player.playerId)
+    return response
 
 def hit(conexao,message):
     game.hit(message)
+    response:Response = HitResponse(1,1) #TODO pegar dinamicamente
+    return response
 
 #A conexao é passada como parametro
 async def echo(websocket):
@@ -23,8 +29,8 @@ async def echo(websocket):
         return "Refused\nConexao lotada"
     async for message in websocket:
         print(message)
-        funcoes[message[0]](websocket,message)
-        await websocket.send(message)
+        response = funcoes[message[0]](websocket,message)
+        await response.messageSender(websocket)
     return
     
 async def start():
