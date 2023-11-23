@@ -1,16 +1,22 @@
 from pygame.math import Vector2
-import pygame
+import pygame, math
 from Models.Projectiles import projectilesDict
+from Models.Characters.Mob import Mob
 from Settings.Configuration import screen, cellSize, cellNumberX
-from Models.States import States
+from decimal import *
 
-class Projectile:
+
+class Projectile(Mob):
     
     def __init__(self, x, y, type, target):
-        self.x = x
-        self.y = y
-        self.pos = Vector2(self.x, self.y)
-        self.speed = 1.5
+        super().__init__(x, y)
+        self.health = 0
+        self.mana = 0
+        self.attack = 0
+        self.ability = 0
+        self.armor = 0
+        self.MagicResistance = 0
+        self.speed = 2
         self.sprite = pygame.image.load(projectilesDict[type]).convert_alpha()
         self.target = target
         if not self.isLeft():
@@ -21,30 +27,20 @@ class Projectile:
             self.target = target
         
     def update(self):
-        return self.moveProctile()    
+        return self.move()    
         
     def draw(self):
         self.rect = pygame.Rect(self.pos.x*cellSize, self.pos.y*cellSize, cellSize, cellSize)
         screen.blit(self.sprite, self.rect)  
         
-    def moveProctile(self):
-        if self.pos.x < self.target.x-self.speed or self.pos.x > self.target.x+self.speed:
-            yRelation = self.pos.y - self.target.y
-            if self.isLeft():
-                self.pos.x+=self.speed
-            elif not self.isLeft():
-                self.pos.x-=self.speed
-            if self.pos.x == cellNumberX/2: 
-                if yRelation>0.5:
-                    self.pos.y-=1
-                elif yRelation<0.5:
-                    self.pos.y+=1.5
+    def move(self):
+        if self.pos.x < self.target.x-1 or self.pos.x > self.target.x+1:
+            self.walk(int(self.speed), int(1), self.target.y+0.500)
             return False
         else:
             self.vanish()
             return True
             
-                
     def isLeft(self):
         if self.x < cellNumberX/2:
             return True

@@ -1,16 +1,16 @@
 import pygame
 from pygame.math import Vector2
-from Settings.Configuration import cellNumberX
-from Models.Damage import Damage
+from Settings.Configuration import cellNumberX, screen
+from CombatMechanics.Damage import Damage
 from Models.States import States
 
-class Character():
+class Mob():
     
     def __init__(self, x, y):
         self.x = x
         self.y = y
         self.pos = Vector2(self.x, self.y)
-        self.health = 20
+        self.health = 2
         self.mana = 0
         self.attack = 2
         self.ability = 0
@@ -20,10 +20,29 @@ class Character():
         self.rect = self.pos
         self.target = None
         self.state = States.IDLE
-        self.sprite = None
+        self.spriteNormal = pygame.surface.Surface((0,0))
+        self.spriteDamaged = pygame.surface.Surface((0,0))
+        self.sprite = self.spriteNormal
+        self.flipSprite()
+        self.countFlash = 20
+        
         
     def draw(self):
+        if self.sprite == self.spriteDamaged and self.countFlash>0:
+            self.countFlash-=1
+        elif self.state == States.DEAD:
+            colorImage = pygame.Surface(self.sprite.get_size()).convert_alpha()
+            colorImage.fill((47,47,47))
+            self.sprite.blit(colorImage, (0,0), special_flags = pygame.BLEND_RGBA_MULT)
+        else:
+            self.sprite = self.spriteNormal
         pass
+    
+    def flipSprite(self):
+        if not self.isLeft():
+            self.spriteNormal = pygame.transform.flip(self.spriteNormal, True, False) 
+            self.spriteDamaged = pygame.transform.flip(self.spriteDamaged, True, False) 
+            self.sprite = pygame.transform.flip(self.sprite, True, False) 
     
     def getInput(self):
         pass
@@ -56,32 +75,27 @@ class Character():
     def move(self):
         if self.state == States.MARCHING:
             if self.pos.x < self.target.x-1 or self.pos.x > self.target.x+1:
-                yRelation = self.pos.y - self.target.y
-                if self.isLeft():
-                    self.pos.x+=1
-                elif not self.isLeft():
-                    self.pos.x-=1
-                if self.pos.x == cellNumberX/2:    
-                    if yRelation>0:
-                        self.pos.y-=1
-                    elif yRelation<0:
-                        self.pos.y+=1
+               self.walk(self.speed, 1, self.target.y) 
             else:
                 self.state = States.MELEE
                 self.defineTarget(None)
         elif self.state == States.RETREATING:
             if self.pos.x != self.x or self.pos.y != self.y:
-                if self.isLeft():
-                    self.pos.x-=1
-                elif not self.isLeft():
-                    self.pos.x+=1
-                if self.pos.x == cellNumberX/2:
-                    if self.pos.y < self.y:
-                        self.pos.y+=1
-                    elif self.pos.y > self.y:
-                        self.pos.y-=1
+                self.walk(self.speed*-1, 1, self.y)
                 self.isInOriginalPos()
         
+    def walk(self, speedX, speedY, y):
+        yRelation = self.pos.y - y
+        if self.pos.x != self.x or speedX>0:
+            if self.isLeft():
+                self.pos.x+=speedX
+            elif not self.isLeft():
+                self.pos.x-=speedX
+        if self.isLeft() and self.pos.x>cellNumberX/2 or not self.isLeft() and self.pos.x<cellNumberX/2:    
+            if yRelation>0:
+                self.pos.y-=speedY
+            elif yRelation<0:
+                self.pos.y+=speedY
     
     def isLeft(self):
         if self.x < cellNumberX/2:
@@ -97,16 +111,20 @@ class Character():
         print(str(damage)+" de dano sofrido")
         print(str(self.health)+" de vida restante")
         if self.health <= 0:
+            print("Morreu.")
             self.die()
             pass
+        else:
+            self.blink()
+           
+       
         
-    
+    def blink(self):
+        self.countFlash = 20
+        self.sprite = self.spriteDamaged
+        
     def die(self):
-        print("Morreu.")
         self.state = States.DEAD
-        colorImage = pygame.Surface(self.sprite.get_size()).convert_alpha()
-        colorImage.fill((47,47,47))
-        self.sprite.blit(colorImage, (0,0), special_flags = pygame.BLEND_RGBA_MULT)
         if not self.isLeft():
             self.sprite = pygame.transform.rotate(self.sprite, -90) 
         else:
