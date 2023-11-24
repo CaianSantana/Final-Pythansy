@@ -18,3 +18,6 @@ class PlayerPy:
     
     def addChar(self,char:Chars):
         self.personagens.append(char)
+        char.setId(len(self.personagens) - 1)
+        print("adicionada")
+        return char.id
