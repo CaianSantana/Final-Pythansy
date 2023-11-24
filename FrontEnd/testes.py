@@ -5,12 +5,12 @@ from websockets.sync.client import connect
 
 async def hello():
     with connect("ws://localhost:8080") as websocket:
+        websocket.send("J receba")
+        message = websocket.recv()
         while(True):
-            websocket.send("J receba")
-            message = websocket.recv()
             print(f"Received: {message}")
             print()
-            websocket.send("H from:1\n to:1\n Dano:10\n")
+            websocket.send("H from:0\n to:0\n Dano:10\n")
             message = websocket.recv()
             print(f"Received: {message}")
             await asyncio.sleep(1)

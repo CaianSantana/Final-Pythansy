@@ -4,18 +4,17 @@ from playerManagement.PlayerPy import PlayerPy
 from game.Game import Game
 
 funcoes = {}
-game:Game = None
+game:Game = Game()
 
 #Padrao de assinatura de toda funcao deve ser este a seguir {Negociavel de passar conexao algo a ser analisado}
 def join(conexao, playerName)-> PlayerPy:
-    if(game.playerJaEstaEmPartida):    
+    if(not game.playerJaEstaEmPartida(conexao)):    
         player = PlayerPy(playerName, conexao)
+        game.join(player)
     return player
 
 def hit(conexao,message):
     game.hit(message)
-
-
 
 #A conexao é passada como parametro
 async def echo(websocket):
@@ -29,7 +28,6 @@ async def echo(websocket):
     return
     
 async def start():
-    game = Game()
     funcoes["J"] = join
     funcoes["H"] = hit
     async with serve(echo, "localhost", 8080):
