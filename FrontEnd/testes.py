@@ -7,6 +7,9 @@ async def hello():
     with connect("ws://localhost:8080") as websocket:
         websocket.send("J receba")
         message = websocket.recv()
+        websocket.send("C id:0 hp:25 attack:30 ability:12 armor:10 magicResistance:15 speed:35 mana:20")
+        message = websocket.recv()
+        
         while(True):
             print(f"Received: {message}")
             print()
