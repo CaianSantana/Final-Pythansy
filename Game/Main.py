@@ -6,18 +6,19 @@ from Environments.Scenario import Scenario
 from CombatMechanics.Combat import Combat
 from Models.States import States
 from CombatMechanics.HUD import HUD
+from Run.Player import Player
 
 #input = InputBox(570, 376, 140, 32)  -- Teste de inputbox
 
 class Main:
     
     def __init__(self):
-        self.playerChars = [Wizard(3, 4), Wizard(1, 4), Wizard(5, 4)]
+        self.player = Player([Wizard(3, 4), Wizard(1, 4), Wizard(5, 4)])
         self.enemychars = [Wizard(10, 4), Wizard(12, 4), Wizard(14, 4)] 
-        self.totalChars = self.playerChars + self.enemychars
+        self.totalChars = self.player.chars + self.enemychars
         self.totalChars[0].health = 4
         self.totalChars[2].health = 4
-        self.combat = Combat(self.playerChars, self.enemychars)
+        self.combat = Combat(self.player.chars, self.enemychars)
         self.combat.nextTurn()
         self.cont = 0
         self.scenario = Scenario("Dungeon")
@@ -38,7 +39,8 @@ class Main:
                     try:
                         nextChar = self.combat.order.get(next(nextItem))
                     except:
-                        self.combat.running = False
+                        if self.combat.verifyLife() !=0:
+                            self.combat.running = False
                     if self.combat.verifyTeam(self.combat.turn) and not self.combat.verifyTeam(nextChar) and not nextChar.state == States.DEAD or not self.combat.verifyTeam(self.combat.turn) and self.combat.verifyTeam(nextChar) and not nextChar.state == States.DEAD:
                         self.combat.turn.defineTarget(nextChar)
                         self.combat.turn.state = States.READY

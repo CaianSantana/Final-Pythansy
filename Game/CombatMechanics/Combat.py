@@ -13,12 +13,9 @@ class Combat:
                 
     def setOrder(self):
         order = {}
-        inits = []
         for index, char in enumerate(self.listOfTotalChars):
-            inits.append(char.speed+random.randint(1, 20))
-        inits.sort()
-        for index, init in enumerate(inits):
-            order[init] = self.listOfTotalChars[index]
+            order[char.speed+random.randint(1, 20)] = self.listOfTotalChars[index]
+        order = dict(sorted(order.items(), reverse = True))
         return order
 
     def verifyLife(self):
@@ -30,6 +27,7 @@ class Combat:
             print("Lado esquerdo venceu.")
             self.running = False
             return -2
+        return 0
 
     def nextTurn(self):
         self.verifyLife()

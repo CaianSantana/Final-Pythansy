@@ -1,5 +1,5 @@
-from Settings.Configuration import *
-from Settings.Main import Main
+from Settings.Configuration import pygame, clock, SCREEN_UPDATE
+from Main import Main
 
 pygame.init()
 
