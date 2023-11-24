@@ -11,8 +11,8 @@ while True:
             mainGame.gameOver()
         if event.type == SCREEN_UPDATE:
             mainGame.update()
-        if event.type == pygame.KEYDOWN:
-            mainGame.keyInput()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mainGame.keyInput(event)
     mainGame.draw()  
     pygame.display.update()
     clock.tick(60)   

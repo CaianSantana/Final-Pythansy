@@ -30,9 +30,9 @@ class Main:
     def update(self):
         for char in self.totalChars:
             char.update()
-        self.HUD.update()
+        self.HUD.update(self.combat.turn)
         pass
-    def keyInput(self): 
+    def keyInput(self, event): 
         if self.combat.running == True:
             if self.combat.turn.state==States.ACTING:
                 print("Turno de "+ str(self.combat.turn)+" iniciado")
@@ -43,9 +43,13 @@ class Main:
                     except:
                         if self.combat.verifyLife() !=0:
                             self.combat.running = False
+                        print(self.combat.order)
                     if self.combat.verifyTeam(self.combat.turn) and not self.combat.verifyTeam(nextChar) and not nextChar.state == States.DEAD or not self.combat.verifyTeam(self.combat.turn) and self.combat.verifyTeam(nextChar) and not nextChar.state == States.DEAD:
                         self.combat.turn.defineTarget(nextChar)
-                        self.combat.turn.state = States.READY
+                        if self.combat.turn.getInput(self.HUD.handleEvent(event)) == 1:
+                            self.combat.turn.getInput(self.HUD.handleEvent(event))
+                        
+                        #self.combat.turn.state = States.READY
                         break
             elif self.combat.turn.state == States.IDLE or self.combat.turn.state == States.DEAD:
                 self.combat.nextTurn()

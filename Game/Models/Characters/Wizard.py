@@ -30,16 +30,15 @@ class Wizard(Mob):
                 
     def update(self):
         super().update()
-        if self.projectile !=None:
+        self.firstSkill()
+        if isinstance(self.projectile, Projectile):
             projectileHit = self.projectile.update()
             if projectileHit:
                 self.projectile = True
+
         
-    def act(self):
-        self.doBasicAttack()
-        self.throwMagic()
     
-    def throwMagic(self):
+    def firstSkill(self):
         if self.state == States.CONJURING and self.mana>=1:
             if self.projectile is None:
                 self.projectile = Projectile(self.x, self.y+0.500, "Fireball", self.target)

@@ -46,7 +46,15 @@ class Mob():
             self.spriteDamaged = pygame.transform.flip(self.spriteDamaged, True, False) 
             self.sprite = pygame.transform.flip(self.sprite, True, False) 
     
-    def getInput(self):
+    def getInput(self, command):
+        match command:
+            case 0: 
+                self.state = States.MARCHING             
+            case 1:
+                self.state = States.CONJURING
+                self.firstSkill()
+            case 2:
+                self.secondSkill()
         pass
     
     def defineTarget(self, target):
@@ -54,20 +62,19 @@ class Mob():
             self.target = target
             
     def update(self):
-        self.getInput()
         self.move()
-        self.act()
+        pass
     
-    def act(self):
-        self.doBasicAttack()
     
     def doBasicAttack(self):
-        if self.state == States.READY:
-            self.state = States.MARCHING
-        if self.state == States.MELEE:
-            print("Atacando o alvo para causar "+str(self.attack)+" de dano fisico")
-            self.target.receiveDamage(self.attack, Damage.PHYSICAL)
-            self.state = States.RETREATING
+        print("Atacando o alvo para causar "+str(self.attack)+" de dano fisico")
+        self.target.receiveDamage(self.attack, Damage.PHYSICAL)
+        self.state = States.RETREATING
+    
+    def firstSkill(self):
+        pass
+    
+    def secondSkill(self):
         pass
     
     def isInOriginalPos(self):
@@ -80,6 +87,7 @@ class Mob():
                self.walk(self.speed, 1, self.target.y) 
             else:
                 self.state = States.MELEE
+                self.doBasicAttack()
                 self.defineTarget(None)
         elif self.state == States.RETREATING:
             if self.pos.x != self.x or self.pos.y != self.y:
@@ -110,8 +118,6 @@ class Mob():
         else:
             damage -= self.MagicResistance
         self.health -= damage
-        print(str(damage)+" de dano sofrido")
-        print(str(self.health)+" de vida restante")
         if self.health <= 0:
             print("Morreu.")
             self.die()
