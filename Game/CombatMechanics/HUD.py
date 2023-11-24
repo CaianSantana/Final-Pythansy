@@ -76,13 +76,17 @@ class HUD:
         distanceY= -1.5
         distanceX = 0
         if isinstance(currentChar, Mob):
+            if currentChar.state != States.DEAD:
+                self.currentArrow = pygame.image.load("Game/Graphics/Current.png").convert_alpha()
             arrowRect = pygame.Rect((currentChar.pos.x+distanceX)*cellSize, (currentChar.pos.y+distanceY)*cellSize, cellSize, cellSize)
             screen.blit(self.currentArrow, arrowRect) 
             if currentChar.state == States.DEAD:
                 colorImage = pygame.Surface(self.currentArrow.get_size()).convert_alpha()
                 colorImage.fill((255,255,255, 0))
                 self.currentArrow.blit(colorImage, (0,0), special_flags = pygame.BLEND_RGBA_MULT)
-        if isinstance(currentTarget, Mob):   
+        if isinstance(currentTarget, Mob):  
+            if currentTarget.state != States.DEAD: 
+                self.targetArrow = pygame.image.load("Game/Graphics/Target.png").convert_alpha()
             arrowRect = pygame.Rect((currentTarget.pos.x+distanceX)*cellSize, (currentTarget.pos.y+distanceY)*cellSize, cellSize, cellSize)
             screen.blit(self.targetArrow, arrowRect)
             if currentTarget.state == States.DEAD:
@@ -96,11 +100,11 @@ class HUD:
                 print("Difiniu 1 como target")
                 self.currentTarget = self.enemyChars[0]
                 return self.enemyChars[0]
-            elif self.enemiesStatRect[1].collidepoint(event.pos):
+            elif self.enemiesStatRect[1].collidepoint(event.pos) and len(self.enemiesStatRect)>1:
                 print("Difiniu 2 como target")
                 self.currentTarget = self.enemyChars[1]
                 return self.enemyChars[1]
-            elif self.enemiesStatRect[2].collidepoint(event.pos):
+            elif self.enemiesStatRect[2].collidepoint(event.pos) and len(self.enemiesStatRect)>2:
                 print("Difiniu 3 como target")
                 self.currentTarget = self.enemyChars[2]
                 return self.enemyChars[2]
@@ -119,12 +123,13 @@ class HUD:
         textRect = textSurface.get_rect(center = (textPos.x, textPos.y))
         screen.blit(textSurface, textRect)
         for index, char in enumerate(self.playerChars):
-            self.distance+=40
-            text = char.className +"     |     "+ str(char.health) + "     |     " + str(char.mana)
-            statsSurface = self.gameFont.render(text, False, (255, 255, 255))
-            statPos = Vector2((screenWidth*1/6) , self.y+self.distance)
-            self.alliesStatRect.append(statsSurface.get_rect(center = (statPos.x, statPos.y)))
-            screen.blit(statsSurface, self.alliesStatRect[index])
+            if char.state != States.DEAD:
+                self.distance+=40
+                text = char.className +"     |     "+ str(char.health) + "     |     " + str(char.mana)
+                statsSurface = self.gameFont.render(text, False, (255, 255, 255))
+                statPos = Vector2((screenWidth*1/6) , self.y+self.distance)
+                self.alliesStatRect.append(statsSurface.get_rect(center = (statPos.x, statPos.y)))
+                screen.blit(statsSurface, self.alliesStatRect[index])
             
     def drawEnemyTeamStats(self):
         self.distance = 20
@@ -133,11 +138,15 @@ class HUD:
         textRect = textSurface.get_rect(center = (textPos.x, textPos.y))
         screen.blit(textSurface, textRect)
         for index, char in enumerate(self.enemyChars):
-            self.distance+=40
-            text = char.className
-            enemyStatSurface = self.gameFont.render(text, False, (255, 255, 255))
-            enemyStatPos = Vector2((screenWidth*5/6) , self.y+self.distance)
-            self.enemiesStatRect.append(enemyStatSurface.get_rect(center = (enemyStatPos.x, enemyStatPos.y)))
-            screen.blit(enemyStatSurface, self.enemiesStatRect[index])
+            if char.state == States.DEAD:
+                index-=1
+                pass
+            else:
+                self.distance+=40
+                text = char.className
+                enemyStatSurface = self.gameFont.render(text, False, (255, 255, 255))
+                enemyStatPos = Vector2((screenWidth*5/6) , self.y+self.distance)
+                self.enemiesStatRect.append(enemyStatSurface.get_rect(center = (enemyStatPos.x, enemyStatPos.y)))
+                screen.blit(enemyStatSurface, self.enemiesStatRect[index])
             
             

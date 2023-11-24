@@ -59,7 +59,6 @@ class Mob():
     
     def defineTarget(self, target):
         if isinstance(target, Mob):
-            print(target)
             self.target = target
             
     def update(self):
@@ -84,7 +83,6 @@ class Mob():
         
     def move(self):
         if self.state == States.MARCHING:
-            print("Andar")
             if self.pos.x < self.target.x-1 or self.pos.x > self.target.x+1:
                self.walk(self.speed, 1, self.target.y) 
             else:
