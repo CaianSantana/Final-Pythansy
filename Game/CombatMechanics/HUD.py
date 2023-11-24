@@ -9,22 +9,33 @@ class HUD:
         self.surface = pygame.Surface((screenWidth, self.height))
         self.playerChars = playerChars
         self.gameFont = gameFont
+        self.textStats = "Life  |  Mana"
+        self.stats = []
         
         
+    def update(self):
+        pass
+    
     def draw(self):
         self.surface.fill("Blue")
         screen.blit(self.surface, (0, self.y))
         self.drawTeamStats()
         
         
+        
     def drawTeamStats(self):
         self.distance = 20
-        
-        for i in range(3):
-            self.score = "Batata"
-            text = self.score
-            textSurface = self.gameFont.render(text, False, (255, 255, 255))
-            textPos = Vector2((screenWidth*3/4), self.y+self.distance)
-            textRect = textSurface.get_rect(center = (textPos.x, textPos.y))
-            screen.blit(textSurface, textRect)
-            self.distance+=60
+        textSurface = self.gameFont.render(self.textStats, False, (255, 255, 255))
+        textPos = Vector2((screenWidth*3/4), self.y+self.distance)
+        textRect = textSurface.get_rect(center = (textPos.x, textPos.y))
+        screen.blit(textSurface, textRect)
+        for char in self.playerChars:
+            self.distance+=40
+            text = str(char.health) + "    |   " + str(char.mana)
+            statsSurface = self.gameFont.render(text, False, (255, 255, 255))
+            statPos = Vector2((screenWidth*3/4)-10, self.y+self.distance)
+            statRect = statsSurface.get_rect(center = (statPos.x, statPos.y))
+            screen.blit(statsSurface, statRect)
+            
+            
+            

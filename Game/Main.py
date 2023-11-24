@@ -22,7 +22,7 @@ class Main:
         self.combat.nextTurn()
         self.cont = 0
         self.scenario = Scenario("Dungeon")
-        self.gameFont = pygame.font.Font('Game/Fonts/Pixeled.ttf', 25)
+        self.gameFont = pygame.font.Font('Game/Fonts/Pixeled.ttf', 15)
         self.HUD = HUD(self.player.chars, self.gameFont)
         
         pass
@@ -30,7 +30,7 @@ class Main:
     def update(self):
         for char in self.totalChars:
             char.update()
-            
+        self.HUD.update()
         pass
     def keyInput(self): 
         if self.combat.running == True:
