@@ -1,4 +1,4 @@
-import sys
+import sys, random
 from Settings.Configuration import screen, pygame
 from Settings.InputBox import InputBox
 from Models.Characters.Mob import Mob
@@ -33,13 +33,17 @@ class Main:
         pass
     def keyInput(self, event): 
         if self.combat.running == True:
-            if self.combat.turn.state==States.ACTING:
+            if self.combat.turn.state==States.ACTING and self.combat.turn in self.totalChars:
                 print("Turno de "+ str(self.combat.turn)+" iniciado")
-                HUDReturn = self.HUD.handleEvent(event)
-                if isinstance(HUDReturn, Mob) :
-                     self.combat.turn.defineTarget(HUDReturn)
-                elif self.combat.turn.getInput(HUDReturn) == 1:
-                    self.combat.turn.getInput(self.HUD.handleEvent(event))
+                if self.combat.turn in self.player.chars:
+                    HUDReturn = self.HUD.handleEvent(event)
+                    if isinstance(HUDReturn, Mob):
+                        self.combat.turn.defineTarget(HUDReturn)
+                    elif self.combat.turn.getInput(HUDReturn):
+                        self.combat.turn.getInput(self.HUD.handleEvent(event))
+                else:
+                    self.combat.turn.defineTarget(self.player.chars[random.randint(0,2)])
+                    self.combat.turn.getInput(random.randint(0,1))
             elif self.combat.turn.state == States.IDLE or self.combat.turn.state == States.DEAD:
                 self.combat.nextTurn()
         else:

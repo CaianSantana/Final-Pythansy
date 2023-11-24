@@ -3,6 +3,7 @@ from pygame.math import Vector2
 from Settings.Configuration import screen, screenHeight, screenWidth, cellSize
 from Models.Characters.Wizard import Wizard
 from Models.Characters.Mob import Mob
+from Models.States import States
 
 COLOR_INACTIVE = pygame.Color('lightskyblue3')
 COLOR_ACTIVE = pygame.Color('dodgerblue2')
@@ -15,14 +16,17 @@ class HUD:
         self.playerChars = playerChars
         self.enemyChars = enemyChars
         self.gameFont = gameFont
-        self.targetArrow = pygame.image.load("Game/Graphics/Target.png").convert_alpha() #Fonte: https://thenounproject.com/browse/icons/term/pixel-arrow/
+        self.currentArrow = pygame.image.load("Game/Graphics/Current.png").convert_alpha()
+        self.targetArrow = pygame.image.load("Game/Graphics/Target.png").convert_alpha()
         self.textStats = "Character  |  Life  |  Mana"
         self.alliesStatRect = []
         self.enemiesStatRect = []
         self.currentChar = None
+        self.currentTarget = None
         
         
     def update(self, currentChar):
+        self.currentChar = currentChar
         pass
     
     def draw(self):
@@ -67,33 +71,46 @@ class HUD:
         pass
      
     def drawSelected(self):
-        char = self.currentChar
+        currentChar = self.currentChar
+        currentTarget = self.currentTarget
         distanceY= -1.5
         distanceX = 0
-        if isinstance(char, Mob):
-            arrowRect = pygame.Rect((char.pos.x+distanceX)*cellSize, (char.pos.y+distanceY)*cellSize, cellSize, cellSize)
-            screen.blit(self.targetArrow, arrowRect) 
+        if isinstance(currentChar, Mob):
+            arrowRect = pygame.Rect((currentChar.pos.x+distanceX)*cellSize, (currentChar.pos.y+distanceY)*cellSize, cellSize, cellSize)
+            screen.blit(self.currentArrow, arrowRect) 
+            if currentChar.state == States.DEAD:
+                colorImage = pygame.Surface(self.currentArrow.get_size()).convert_alpha()
+                colorImage.fill((255,255,255, 0))
+                self.currentArrow.blit(colorImage, (0,0), special_flags = pygame.BLEND_RGBA_MULT)
+        if isinstance(currentTarget, Mob):   
+            arrowRect = pygame.Rect((currentTarget.pos.x+distanceX)*cellSize, (currentTarget.pos.y+distanceY)*cellSize, cellSize, cellSize)
+            screen.blit(self.targetArrow, arrowRect)
+            if currentTarget.state == States.DEAD:
+                colorImage = pygame.Surface(self.targetArrow.get_size()).convert_alpha()
+                colorImage.fill((255,255,255, 0))
+                self.targetArrow.blit(colorImage, (0,0), special_flags = pygame.BLEND_RGBA_MULT)
       
     def handleEvent(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.enemiesStatRect[0].collidepoint(event.pos):
                 print("Difiniu 1 como target")
-                self.currentChar = self.enemyChars[0]
+                self.currentTarget = self.enemyChars[0]
                 return self.enemyChars[0]
             elif self.enemiesStatRect[1].collidepoint(event.pos):
                 print("Difiniu 2 como target")
-                self.currentChar = self.enemyChars[1]
+                self.currentTarget = self.enemyChars[1]
                 return self.enemyChars[1]
             elif self.enemiesStatRect[2].collidepoint(event.pos):
                 print("Difiniu 3 como target")
-                self.currentChar = self.enemyChars[2]
+                self.currentTarget = self.enemyChars[2]
                 return self.enemyChars[2]
-            elif self.attackRect.collidepoint(event.pos):
-                return 0
-            elif self.firstSkillRect.collidepoint(event.pos):
-                return 1
-            elif self.secondSkillRect.collidepoint(event.pos):
-                return 2
+            if isinstance(self.currentChar.target, Mob):
+                if self.attackRect.collidepoint(event.pos):
+                    return 0
+                elif self.firstSkillRect.collidepoint(event.pos):
+                    return 1
+                elif self.secondSkillRect.collidepoint(event.pos):
+                    return 2
 
     def drawTeamStats(self):
         self.distance = 20
