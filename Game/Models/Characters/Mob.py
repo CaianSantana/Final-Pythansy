@@ -20,6 +20,7 @@ class Mob():
         self.rect = self.pos
         self.target = None
         self.state = States.IDLE
+        self.className = "Nulo"
         self.spriteNormal = pygame.surface.Surface((0,0))
         self.spriteDamaged = pygame.surface.Surface((0,0))
         self.sprite = self.spriteNormal
