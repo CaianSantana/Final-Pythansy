@@ -2,6 +2,8 @@ import random
 from Models.States import States
 from CombatMechanics.HUD import HUD
 from Environments.Scenario import Scenario
+from Models.Characters.Mob import Mob
+
 
 
 class Combat:
@@ -11,7 +13,7 @@ class Combat:
         self.listOfTotalChars = leftTeam + rightTeam
         self.running = True
         self.order = self.setOrder()
-        self.turn = None
+        self.turn = self.nextTurn()
         self.HUD = HUD(self.leftTeam, self.rightTeam, gameFont)
         self.scenario = Scenario(level)
         
@@ -25,7 +27,24 @@ class Combat:
         for char in self.listOfTotalChars:
             char.draw()
         self.HUD.draw()
-        
+    
+    def doCombat(self, event):
+        if self.running == True:
+            if self.turn.state==States.ACTING and self.turn in self.listOfTotalChars:
+                print("Turno de "+ str(self.turn)+" iniciado")
+                if self.verifyTeam(self.turn):
+                    HUDReturn = self.HUD.handleEvent(event)
+                    if isinstance(HUDReturn, Mob):
+                        self.turn.defineTarget(HUDReturn)
+                    elif self.turn.getInput(HUDReturn):
+                        self.turn.getInput(self.HUD.handleEvent(event))
+                else:
+                    self.turn.defineTarget(self.leftTeam[random.randint(0,2)])
+                    self.turn.getInput(random.randint(0,1))
+            elif self.turn.state == States.IDLE or self.turn.state == States.DEAD:
+                self.nextTurn()
+        else:
+            print("Combate finalizado.")
                 
     def setOrder(self):
         order = {}
