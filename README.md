@@ -76,11 +76,11 @@ Para criar o jogo, devemos concluir certas etapas que estarão listadas a seguir
     - [ ]   Possuir uma forma de "função"(ex.: Mago, Guerreiro)
 
 * classe Jogador: 
-    - [ ]   Possuir objeto do tipo Personagens
-    - [ ]   Cada personagem deve agir conforme input do jogador em seu respectivo turno
+    - [x]   Possuir objeto do tipo Personagens
+    - [x]   Cada personagem deve agir conforme input do jogador em seu respectivo turno
 * classe Combate:
-    - [ ]   Possuir objeto do tipo Jogador
-    - [ ]   Possuir objeto do tipo inimigos
+    - [x]   Possuir objeto do tipo equipe do jogador
+    - [x]   Possuir objeto do tipo equipe do inimigo
     - [x]   Deve ser capaz de dizer quando o combate terminar
 
 
