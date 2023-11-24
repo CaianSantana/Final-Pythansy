@@ -16,8 +16,7 @@ async def echo(websocket):
         return websocket.send("Refused\nConexao lotada")
     async for message in websocket:
         print(message)
-        response = game.handleMessage(websocket,message)
-        await response.messageSender(websocket)
+        await game.handleMessage(websocket,message)
     return
     
 async def start():
