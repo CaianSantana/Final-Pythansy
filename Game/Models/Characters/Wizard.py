@@ -15,8 +15,8 @@ class Wizard(Mob):
         self.ability = 2
         self.MagicResistance = 1
         self.projectile = None
-        self.spriteNormal = pygame.image.load("Final-Pythansy/Game/Graphics/Wizard.png").convert_alpha()#fonte: https://www.pngkey.com/maxpic/u2e6q8r5i1y3y3u2/
-        self.spriteDamaged = pygame.image.load("Final-Pythansy/Game/Graphics/WizardDamaged.png").convert_alpha()
+        self.spriteNormal = pygame.image.load("Game/Graphics/Wizard.png").convert_alpha()#fonte: https://www.pngkey.com/maxpic/u2e6q8r5i1y3y3u2/
+        self.spriteDamaged = pygame.image.load("Game/Graphics/WizardDamaged.png").convert_alpha()
         self.flipSprite()
 
     def draw(self):

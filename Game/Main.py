@@ -22,7 +22,9 @@ class Main:
         self.combat.nextTurn()
         self.cont = 0
         self.scenario = Scenario("Dungeon")
-        self.HUD = HUD()
+        self.gameFont = pygame.font.Font('Game/Fonts/Pixeled.ttf', 25)
+        self.HUD = HUD(self.player.chars, self.gameFont)
+        
         pass
     
     def update(self):
