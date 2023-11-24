@@ -1,4 +1,5 @@
 class Chars:    
+    id = None
     hp = 0
     mana = 0
     attack = 0
@@ -19,6 +20,11 @@ class Chars:
     
     def recebaDano(self, dano):
         self.hp = self.hp - dano
+        print("hp restante", self.hp)
         
-    def causeDano(self, PlayerPy, dano):
-        PlayerPy.recebaDano(dano)
+    def causeDano(self, char, dano:int):
+        char.recebaDano(dano)
+        pass
+        
+    def setId(self,id:int):
+        self.id = id
