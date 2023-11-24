@@ -32,10 +32,8 @@ class HUD:
         textRect = textSurface.get_rect(center = (textPos.x, textPos.y))
         screen.blit(textSurface, textRect)
         for char in self.playerChars:
-            if isinstance(char, Wizard):
-                className = "Wizard"
             self.distance+=40
-            text = className +"    |    "+ str(char.health) + "     |   " + str(char.mana)
+            text = char.className +"    |    "+ str(char.health) + "     |   " + str(char.mana)
             statsSurface = self.gameFont.render(text, False, (255, 255, 255))
             statPos = Vector2((screenWidth*4/6) , self.y+self.distance)
             statRect = statsSurface.get_rect(center = (statPos.x, statPos.y))
