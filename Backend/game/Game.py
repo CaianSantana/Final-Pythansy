@@ -15,6 +15,7 @@ class Game:
         playerPy.setId = len(self.playersPy) 
         self.playersPy.append(playerPy)
         print(len(self.playersPy))
+        return playerPy.playerId
            
     def hit(self, message):
         playerId = int(message[7])
@@ -40,8 +41,7 @@ class Game:
     def setMessageHandler(self, messageHandler):
         self.messageHandler = messageHandler
     
-    def handleMessage(self, websocket,message):
-        print("lidei com a mensagem")
-        self.messageHandler.handleMessage(websocket,message)
+    async def handleMessage(self, websocket,message):
+        await self.messageHandler.handleMessage(websocket,message)
         
     
