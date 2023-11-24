@@ -1,15 +1,31 @@
 import random
 from Models.States import States
+from CombatMechanics.HUD import HUD
+from Environments.Scenario import Scenario
 
 
 class Combat:
-    def __init__(self, leftTeam, rightTeam):
+    def __init__(self, leftTeam, rightTeam, gameFont, level):
         self.leftTeam = leftTeam
         self.rightTeam = rightTeam
         self.listOfTotalChars = leftTeam + rightTeam
         self.running = True
         self.order = self.setOrder()
-        self.turn = 0
+        self.turn = None
+        self.HUD = HUD(self.leftTeam, self.rightTeam, gameFont)
+        self.scenario = Scenario(level)
+        
+    def update(self):
+        self.HUD.update(self.turn)
+        for char in self.listOfTotalChars:
+            char.update()
+        
+    def draw(self):
+        self.scenario.draw()
+        for char in self.listOfTotalChars:
+            char.draw()
+        self.HUD.draw()
+        
                 
     def setOrder(self):
         order = {}

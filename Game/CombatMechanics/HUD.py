@@ -123,7 +123,10 @@ class HUD:
         textRect = textSurface.get_rect(center = (textPos.x, textPos.y))
         screen.blit(textSurface, textRect)
         for index, char in enumerate(self.playerChars):
-            if char.state != States.DEAD:
+            if char.state == States.DEAD:
+                index-=1
+                pass
+            else:
                 self.distance+=40
                 text = char.className +"     |     "+ str(char.health) + "     |     " + str(char.mana)
                 statsSurface = self.gameFont.render(text, False, (255, 255, 255))
