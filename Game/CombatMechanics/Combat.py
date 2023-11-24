@@ -1,24 +1,56 @@
 import random
 from Models.States import States
+from CombatMechanics.HUD import HUD
+from Environments.Scenario import Scenario
+from Models.Characters.Mob import Mob
+
 
 
 class Combat:
-    def __init__(self, leftTeam, rightTeam):
+    def __init__(self, leftTeam, rightTeam, gameFont, level):
         self.leftTeam = leftTeam
         self.rightTeam = rightTeam
         self.listOfTotalChars = leftTeam + rightTeam
         self.running = True
         self.order = self.setOrder()
-        self.turn = 0
+        self.turn = self.nextTurn()
+        self.HUD = HUD(self.leftTeam, self.rightTeam, gameFont)
+        self.scenario = Scenario(level)
+        
+    def update(self):
+        self.HUD.update(self.turn)
+        for char in self.listOfTotalChars:
+            char.update()
+        
+    def draw(self):
+        self.scenario.draw()
+        for char in self.listOfTotalChars:
+            char.draw()
+        self.HUD.draw()
+    
+    def doCombat(self, event):
+        if self.running == True:
+            if self.turn.state==States.ACTING and self.turn in self.listOfTotalChars:
+                print("Turno de "+ str(self.turn)+" iniciado")
+                if self.verifyTeam(self.turn):
+                    HUDReturn = self.HUD.handleEvent(event)
+                    if isinstance(HUDReturn, Mob):
+                        self.turn.defineTarget(HUDReturn)
+                    elif self.turn.getInput(HUDReturn):
+                        self.turn.getInput(self.HUD.handleEvent(event))
+                else:
+                    self.turn.defineTarget(self.leftTeam[random.randint(0,2)])
+                    self.turn.getInput(random.randint(0,1))
+            elif self.turn.state == States.IDLE or self.turn.state == States.DEAD:
+                self.nextTurn()
+        else:
+            print("Combate finalizado.")
                 
     def setOrder(self):
         order = {}
-        inits = []
         for index, char in enumerate(self.listOfTotalChars):
-            inits.append(char.speed+random.randint(1, 20))
-        inits.sort()
-        for index, init in enumerate(inits):
-            order[init] = self.listOfTotalChars[index]
+            order[char.speed+random.randint(1, 20)] = self.listOfTotalChars[index]
+        order = dict(sorted(order.items(), reverse = True))
         return order
 
     def verifyLife(self):
@@ -30,6 +62,7 @@ class Combat:
             print("Lado esquerdo venceu.")
             self.running = False
             return -2
+        return 0
 
     def nextTurn(self):
         self.verifyLife()

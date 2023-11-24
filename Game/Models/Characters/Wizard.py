@@ -15,8 +15,9 @@ class Wizard(Mob):
         self.ability = 2
         self.MagicResistance = 1
         self.projectile = None
-        self.spriteNormal = pygame.image.load("Final-Pythansy/Game/Graphics/Wizard.png").convert_alpha()#fonte: https://www.pngkey.com/maxpic/u2e6q8r5i1y3y3u2/
-        self.spriteDamaged = pygame.image.load("Final-Pythansy/Game/Graphics/WizardDamaged.png").convert_alpha()
+        self.className = "Wizard"
+        self.spriteNormal = pygame.image.load("Game/Graphics/Wizard.png").convert_alpha()#fonte: https://www.pngkey.com/maxpic/u2e6q8r5i1y3y3u2/
+        self.spriteDamaged = pygame.image.load("Game/Graphics/WizardDamaged.png").convert_alpha()
         self.flipSprite()
 
     def draw(self):
@@ -29,16 +30,15 @@ class Wizard(Mob):
                 
     def update(self):
         super().update()
-        if self.projectile !=None:
+        self.firstSkill()
+        if isinstance(self.projectile, Projectile):
             projectileHit = self.projectile.update()
             if projectileHit:
                 self.projectile = True
+
         
-    def act(self):
-        self.doBasicAttack()
-        self.throwMagic()
     
-    def throwMagic(self):
+    def firstSkill(self):
         if self.state == States.CONJURING and self.mana>=1:
             if self.projectile is None:
                 self.projectile = Projectile(self.x, self.y+0.500, "Fireball", self.target)

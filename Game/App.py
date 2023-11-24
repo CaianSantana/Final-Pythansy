@@ -1,5 +1,5 @@
-from Settings.Configuration import *
-from Settings.Main import Main
+from Settings.Configuration import pygame, clock, SCREEN_UPDATE
+from Main import Main
 
 pygame.init()
 
@@ -11,8 +11,8 @@ while True:
             mainGame.gameOver()
         if event.type == SCREEN_UPDATE:
             mainGame.update()
-        if event.type == pygame.KEYDOWN:
-            mainGame.keyInput()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mainGame.keyInput(event)
     mainGame.draw()  
     pygame.display.update()
     clock.tick(60)   
