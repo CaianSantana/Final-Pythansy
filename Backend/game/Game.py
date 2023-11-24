@@ -1,26 +1,32 @@
 from playerManagement.PlayerPy import PlayerPy
+from MessageHanlder.MessageHandler import MessageHandler
+from playerManagement.Chars import Chars
 
 class Game:
     playersPy :list[PlayerPy] = []
+    messageHandler:MessageHandler = None
     
     def __init__(self) -> None:
         pass
     
-    def join(self,playerPy:PlayerPy):
+    def join(self,conexao):
+        if(self.playerJaEstaEmPartida(conexao)):    
+            return    
+        playerPy = PlayerPy("playerName", conexao)
         playerPy.setId = len(self.playersPy) 
-        print("join")
         self.playersPy.append(playerPy)
         print(len(self.playersPy))
-        
-        
-    def hit(self, message):
-        playerId = int(message[7])
-        playerTargetId = int(message[13])
+        return playerPy.playerId
+           
+    def hit(self, atackerId:int,adversaryId:int,charId:int,target:id,dano:int):
+        playerId = atackerId
+        playerTargetId = adversaryId
         print(len(self.playersPy))
-        atacante = self.playersPy[playerId]
-        atacado = self.playersPy[playerTargetId]
-        atacante.causeDano(atacado,10)
-        print(atacado.hp)
+        atacante = self.getPlayer(playerId)
+        atacado = self.getPlayer(playerTargetId)
+        charDoAtacante:Chars = atacante.getChar(charId)
+        charDoAtacado:Chars = atacado.getChar(target)
+        charDoAtacante.causeDano(charDoAtacado,dano)
         return
     
     def playerJaEstaEmPartida(self,websocket)-> bool:
@@ -34,8 +40,11 @@ class Game:
             return len(self.playersPy)==2
         return False
         
+    def setMessageHandler(self, messageHandler):
+        self.messageHandler = messageHandler
+    
+    async def handleMessage(self, websocket,message):
+        await self.messageHandler.handleMessage(websocket,message)
         
-    
-    
-        
-    
+    def getPlayer(self,id:int) -> PlayerPy:
+        return self.playersPy[id]
