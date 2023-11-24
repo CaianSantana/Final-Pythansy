@@ -2,8 +2,7 @@
 from ResponseStrategy.Response import Response
 from ResponseStrategy.HitResponse import HitResponse
 from websockets.server import serve
-
-
+from MessageHanlder.HitMessageHandler import HitMessageHandler
 
 class MessageHandler:
     game = None
@@ -17,16 +16,18 @@ class MessageHandler:
     def setWebSocket(self,websocket):
         self.websocket = websocket
         
-    def handleMessage(self, websocket,message):
-        
-        
-        pass
+    async def handleMessage(self, websocket,message):
+        self.setWebSocket(websocket)
+        if((await self.canIawnser(message))):
+            playerId = self.game.join(websocket)
+            await self.sendResponse(Response(playerId))
     
     async def sendResponse(self, response:Response):
-        
-        pass
+        await response.messageSender(self.websocket)
     
-    def hit(self,message):
-        self.game.hit(message)
-        response:Response = HitResponse(1,1) #TODO pegar dinamicamente
-        return response
+    async def canIawnser(self,message:str)-> bool:
+        if(not message[0] == "J"):
+            nextMessageHandler = HitMessageHandler(self.game,self.websocket)
+            await nextMessageHandler.handleMessage(self.websocket,message)
+            return False
+        return True
