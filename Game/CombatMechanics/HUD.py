@@ -1,7 +1,8 @@
 import pygame
 from pygame.math import Vector2
-from Settings.Configuration import screen, screenHeight, screenWidth, cellNumberX
+from Settings.Configuration import screen, screenHeight, screenWidth, cellSize
 from Models.Characters.Wizard import Wizard
+from Models.Characters.Mob import Mob
 
 COLOR_INACTIVE = pygame.Color('lightskyblue3')
 COLOR_ACTIVE = pygame.Color('dodgerblue2')
@@ -14,6 +15,7 @@ class HUD:
         self.playerChars = playerChars
         self.enemyChars = enemyChars
         self.gameFont = gameFont
+        self.targetArrow = pygame.image.load("Game/Graphics/Target.png").convert_alpha() #Fonte: https://thenounproject.com/browse/icons/term/pixel-arrow/
         self.textStats = "Character  |  Life  |  Mana"
         self.alliesStatRect = []
         self.enemiesStatRect = []
@@ -21,18 +23,18 @@ class HUD:
         
         
     def update(self, currentChar):
-        self.currentChar = currentChar
         pass
     
     def draw(self):
         self.surface.fill("Blue")
         screen.blit(self.surface, (0, self.y))
+        self.drawSelected()
         self.drawTeamStats()
         self.drawEnemyTeamStats()
         self.drawActions()
         
-    def drawActions(self):
         
+    def drawActions(self):
         self.distance=25
         text = "Atacar"
         actionSuface = self.gameFont.render(text, False, (255, 255, 255))
@@ -63,18 +65,28 @@ class HUD:
         screen.blit(actionSuface, self.secondSkillRect)
         pygame.draw.rect(screen,(255, 255, 255), bgRect, 2)
         pass
-      
+     
+    def drawSelected(self):
+        char = self.currentChar
+        distanceY= -1.5
+        distanceX = 0
+        if isinstance(char, Mob):
+            arrowRect = pygame.Rect((char.pos.x+distanceX)*cellSize, (char.pos.y+distanceY)*cellSize, cellSize, cellSize)
+            screen.blit(self.targetArrow, arrowRect) 
       
     def handleEvent(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.enemiesStatRect[0].collidepoint(event.pos):
                 print("Difiniu 1 como target")
+                self.currentChar = self.enemyChars[0]
                 return self.enemyChars[0]
             elif self.enemiesStatRect[1].collidepoint(event.pos):
                 print("Difiniu 2 como target")
+                self.currentChar = self.enemyChars[1]
                 return self.enemyChars[1]
             elif self.enemiesStatRect[2].collidepoint(event.pos):
                 print("Difiniu 3 como target")
+                self.currentChar = self.enemyChars[2]
                 return self.enemyChars[2]
             elif self.attackRect.collidepoint(event.pos):
                 return 0

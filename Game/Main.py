@@ -47,6 +47,7 @@ class Main:
        
        
     def draw(self):
+        
         self.scenario.draw()
         self.HUD.draw()
         for char in self.totalChars:
