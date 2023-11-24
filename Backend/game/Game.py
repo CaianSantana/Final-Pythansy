@@ -1,5 +1,6 @@
 from playerManagement.PlayerPy import PlayerPy
 from MessageHanlder.MessageHandler import MessageHandler
+from playerManagement.Chars import Chars
 
 class Game:
     playersPy :list[PlayerPy] = []
@@ -17,14 +18,15 @@ class Game:
         print(len(self.playersPy))
         return playerPy.playerId
            
-    def hit(self, message):
-        playerId = int(message[7])
-        playerTargetId = int(message[13])
+    def hit(self, atackerId:int,adversaryId:int,charId:int,target:id,dano:int):
+        playerId = atackerId
+        playerTargetId = adversaryId
         print(len(self.playersPy))
-        atacante = self.playersPy[playerId]
-        atacado = self.playersPy[playerTargetId]
-        #atacante.causeDano(atacado,10)
-        print("atacado.hp")
+        atacante = self.getPlayer(playerId)
+        atacado = self.getPlayer(playerTargetId)
+        charDoAtacante:Chars = atacante.getChar(charId)
+        charDoAtacado:Chars = atacado.getChar(target)
+        charDoAtacante.causeDano(charDoAtacado,dano)
         return
     
     def playerJaEstaEmPartida(self,websocket)-> bool:
@@ -44,4 +46,5 @@ class Game:
     async def handleMessage(self, websocket,message):
         await self.messageHandler.handleMessage(websocket,message)
         
-    
+    def getPlayer(self,id:int) -> PlayerPy:
+        return self.playersPy[id]
