@@ -7,14 +7,16 @@ COLOR_INACTIVE = pygame.Color('lightskyblue3')
 COLOR_ACTIVE = pygame.Color('dodgerblue2')
 
 class HUD:
-    def __init__(self, playerChars, gameFont):
+    def __init__(self, playerChars, enemyChars, gameFont):
         self.height = screenHeight/4
         self.y = screenHeight - self.height
         self.surface = pygame.Surface((screenWidth, self.height))
         self.playerChars = playerChars
+        self.enemyChars = enemyChars
         self.gameFont = gameFont
         self.textStats = "Character  |  Life  |  Mana"
-        self.stats = []
+        self.alliesStatRect = []
+        self.enemiesStatRect = []
         self.currentChar = None
         
         
@@ -26,6 +28,7 @@ class HUD:
         self.surface.fill("Blue")
         screen.blit(self.surface, (0, self.y))
         self.drawTeamStats()
+        self.drawEnemyTeamStats()
         self.drawActions()
         
     def drawActions(self):
@@ -64,15 +67,21 @@ class HUD:
       
     def handleEvent(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
-            # If the user clicked on the input_box rect.
-            if self.attackRect.collidepoint(event.pos):
-                # Toggle the active variable.
+            if self.enemiesStatRect[0].collidepoint(event.pos):
+                print("Difiniu 1 como target")
+                return self.enemyChars[0]
+            elif self.enemiesStatRect[1].collidepoint(event.pos):
+                print("Difiniu 2 como target")
+                return self.enemyChars[1]
+            elif self.enemiesStatRect[2].collidepoint(event.pos):
+                print("Difiniu 3 como target")
+                return self.enemyChars[2]
+            elif self.attackRect.collidepoint(event.pos):
                 return 0
             elif self.firstSkillRect.collidepoint(event.pos):
                 return 1
             elif self.secondSkillRect.collidepoint(event.pos):
                 return 2
-            # Change the current color of the input box.
 
     def drawTeamStats(self):
         self.distance = 20
@@ -80,13 +89,26 @@ class HUD:
         textPos = Vector2((screenWidth*1/6), self.y+self.distance)
         textRect = textSurface.get_rect(center = (textPos.x, textPos.y))
         screen.blit(textSurface, textRect)
-        for char in self.playerChars:
+        for index, char in enumerate(self.playerChars):
             self.distance+=40
             text = char.className +"     |     "+ str(char.health) + "     |     " + str(char.mana)
             statsSurface = self.gameFont.render(text, False, (255, 255, 255))
             statPos = Vector2((screenWidth*1/6) , self.y+self.distance)
-            statRect = statsSurface.get_rect(center = (statPos.x, statPos.y))
-            screen.blit(statsSurface, statRect)
+            self.alliesStatRect.append(statsSurface.get_rect(center = (statPos.x, statPos.y)))
+            screen.blit(statsSurface, self.alliesStatRect[index])
             
+    def drawEnemyTeamStats(self):
+        self.distance = 20
+        textSurface = self.gameFont.render("Enemies", False, (255, 255, 255))
+        textPos = Vector2((screenWidth*5/6), self.y+self.distance)
+        textRect = textSurface.get_rect(center = (textPos.x, textPos.y))
+        screen.blit(textSurface, textRect)
+        for index, char in enumerate(self.enemyChars):
+            self.distance+=40
+            text = char.className
+            enemyStatSurface = self.gameFont.render(text, False, (255, 255, 255))
+            enemyStatPos = Vector2((screenWidth*5/6) , self.y+self.distance)
+            self.enemiesStatRect.append(enemyStatSurface.get_rect(center = (enemyStatPos.x, enemyStatPos.y)))
+            screen.blit(enemyStatSurface, self.enemiesStatRect[index])
             
             

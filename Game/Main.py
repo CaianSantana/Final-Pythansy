@@ -1,6 +1,7 @@
 import sys
 from Settings.Configuration import screen, pygame
 from Settings.InputBox import InputBox
+from Models.Characters.Mob import Mob
 from Models.Characters.Wizard import Wizard
 from Environments.Scenario import Scenario
 from CombatMechanics.Combat import Combat
@@ -21,7 +22,7 @@ class Main:
         self.cont = 0
         self.scenario = Scenario("Dungeon")
         self.gameFont = pygame.font.Font('Game/Fonts/Pixeled.ttf', 15)
-        self.HUD = HUD(self.player.chars, self.gameFont)
+        self.HUD = HUD(self.player.chars, self.enemychars, self.gameFont)
         
         pass
     
@@ -34,16 +35,11 @@ class Main:
         if self.combat.running == True:
             if self.combat.turn.state==States.ACTING:
                 print("Turno de "+ str(self.combat.turn)+" iniciado")
-                for char in self.combat.order.values():
-                    print("Entrei no for")
-                    if self.combat.verifyTeam(self.combat.turn) and not self.combat.verifyTeam(char) or not self.combat.verifyTeam(self.combat.turn) and self.combat.verifyTeam(char):
-                        self.combat.turn.defineTarget(char)
-                        if self.combat.turn.getInput(self.HUD.handleEvent(event)) == 1:
-                            self.combat.turn.getInput(self.HUD.handleEvent(event))
-                        break
-                    else:
-                        print(self.combat.verifyTeam(self.combat.turn))
-                        print(self.combat.verifyTeam(char))
+                HUDReturn = self.HUD.handleEvent(event)
+                if isinstance(HUDReturn, Mob) :
+                     self.combat.turn.defineTarget(HUDReturn)
+                elif self.combat.turn.getInput(HUDReturn) == 1:
+                    self.combat.turn.getInput(self.HUD.handleEvent(event))
             elif self.combat.turn.state == States.IDLE or self.combat.turn.state == States.DEAD:
                 self.combat.nextTurn()
         else:
