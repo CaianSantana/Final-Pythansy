@@ -16,8 +16,6 @@ class Main:
         self.player = Player([Wizard(3, 4), Wizard(1, 4), Wizard(5, 4)])
         self.enemychars = [Wizard(10, 4), Wizard(12, 4), Wizard(14, 4)] 
         self.totalChars = self.player.chars + self.enemychars
-        self.totalChars[0].health = 4
-        self.totalChars[2].health = 4
         self.combat = Combat(self.player.chars, self.enemychars)
         self.combat.nextTurn()
         self.cont = 0
@@ -36,21 +34,16 @@ class Main:
         if self.combat.running == True:
             if self.combat.turn.state==States.ACTING:
                 print("Turno de "+ str(self.combat.turn)+" iniciado")
-                nextItem = iter(self.combat.order)
-                for i in enumerate(self.totalChars):
-                    try:
-                        nextChar = self.combat.order.get(next(nextItem))
-                    except:
-                        if self.combat.verifyLife() !=0:
-                            self.combat.running = False
-                        print(self.combat.order)
-                    if self.combat.verifyTeam(self.combat.turn) and not self.combat.verifyTeam(nextChar) and not nextChar.state == States.DEAD or not self.combat.verifyTeam(self.combat.turn) and self.combat.verifyTeam(nextChar) and not nextChar.state == States.DEAD:
-                        self.combat.turn.defineTarget(nextChar)
+                for char in self.combat.order.values():
+                    print("Entrei no for")
+                    if self.combat.verifyTeam(self.combat.turn) and not self.combat.verifyTeam(char) or not self.combat.verifyTeam(self.combat.turn) and self.combat.verifyTeam(char):
+                        self.combat.turn.defineTarget(char)
                         if self.combat.turn.getInput(self.HUD.handleEvent(event)) == 1:
                             self.combat.turn.getInput(self.HUD.handleEvent(event))
-                        
-                        #self.combat.turn.state = States.READY
                         break
+                    else:
+                        print(self.combat.verifyTeam(self.combat.turn))
+                        print(self.combat.verifyTeam(char))
             elif self.combat.turn.state == States.IDLE or self.combat.turn.state == States.DEAD:
                 self.combat.nextTurn()
         else:
