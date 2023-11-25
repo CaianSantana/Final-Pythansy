@@ -22,8 +22,9 @@ J -> Pedido para jogar deve seguir o formato "J name:{nome do jogador}\0"
 
 C -> caracters -> "C id:{00} hp:{00} attack:{00} ability:{00} armor:{00} magicResistance:{00} speed:{00} mana:{00}"
 
-TODO reescrever essa mensagem
-H -> hit ou acerto formato "H from:{Id de quem acertou} to:{Id do boneco do inimigo} Dano:{+00}"
+H -> hit ou acerto formato "H from:{Id de quem acertou} with:{id do seu boneco} to:{Id do boneco do inimigo} Dano:{+00}"
+
+G -> me de as informacoes do adversario "????????????????? nao sei como fazer ainda"
 
 E -> fim da jogada fez todas as suas ações ou escolheu terminar
 
