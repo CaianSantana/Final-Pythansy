@@ -14,18 +14,19 @@ Seguinte precisamos de um protocolo para este projeto.
 
 <H1>Rastle protocol</H1>
 
-cada letra deve simbolizar um evento
-
 <h3>Para o Server</h3>
 
-J -> Pedido para jogar deve seguir o formato:
+<p>todo json deve conter um campo "action". Exemplo: "action":"Join"</p> 
+
+
+Join -> Pedido para jogar deve seguir o formato:
 
 {
     "action":"Join",
     "nome":"Yasmin yaz bollaz"
 }
 
-C -> caracters -> "C id:{00} hp:{00} attack:{00} ability:{00} armor:{00} magicResistance:{00} speed:{00} mana:{00}"
+Char -> cria personagem, formato:
 
 {
     "action":"char",
@@ -40,32 +41,43 @@ C -> caracters -> "C id:{00} hp:{00} attack:{00} ability:{00} armor:{00} magicRe
     "mana":"20"
 }
 
-H -> hit ou acerto formato "H from:{Id de quem acertou} with:{id do seu boneco} to:{Id do boneco do inimigo} Dano:{+00}"
+Hit -> hit ou acerto, formato:
 
 {
     "action":"hit",
-    "playerId":"0"
-    "with":"0"
-    "to":"0"
+    "playerId":"0",
+    "with":"0",
+    "to":"0",
     "dano":"10"
 }
-
-G -> me de as informacoes do adversario "????????????????? nao sei como fazer ainda"
 
 E -> fim da jogada fez todas as suas ações ou escolheu terminar
 
 <h3>Para o Cliente</h3>
 
-A -> significa aceito -> devolve o id do player formato "A {id}" ou do char
+<p>todo json deve conter um campo "Response". Exemplo: "Response":"accepted"</p> 
 
-U -> update -> "U from {id de quem fez a ação} to {id de quem foi afetado} dano{+00}" sim dois digitos sempre, com sinal claro
+accepted -> aceitou o join, formato:
+
+{   
+    "Response":"accepted",
+    "playerId":"0"
+}
+
+U -> update -> 
+
+{
+    "Response":"update"
+    "attacker":"0",
+    "target":"0",
+    "dano":"10"
+}
 
 T -> {Numero do turno} diz pros clientes quem possui o turno no momento 
 
 F -> fim de jogo servidor manda pros clientes fecha a conexao e envia "F -> {você venceu}" ou "F -> {você perdeu}"
 
 tem algumas coisas que nos permitem usar Json pode facilitar a comunicacao
-
 
 ## To-Do List
 
