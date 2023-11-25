@@ -23,7 +23,7 @@ async def echo(websocket):
     return
     
 async def start():
-    messageHandler = MessageHandler(game=game) 
+    MessageHandler(game=game) 
     async with serve(echo, "localhost", 8080):
         print("Python ta on")
         await asyncio.Future()
