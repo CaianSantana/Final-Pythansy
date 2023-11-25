@@ -27,15 +27,20 @@ async def hello():
         }
         websocket.send(json.dumps(charMessage))
         message = websocket.recv()
-        print(message)
-        
-        # while(True):
-        #     print(f"Received: {message}")
-        #     print()
-        #     websocket.send("H from:0 with:0 to:0 Dano:+10")
-        #     message = websocket.recv()
-        #     print(f"Received: {message}")
-        #     await asyncio.sleep(1.5)
+        while(True):
+            print(f"Received: {message}")
+            print()
+            hitMessage = {
+                "action":"hit",
+                "playerId":"0",
+                "with":"0",
+                "to":"0",
+                "dano":"10"
+            }
+            websocket.send(json.dumps(hitMessage))
+            message = websocket.recv()
+            print(f"Received: {message}")
+            await asyncio.sleep(1.5)
         
 asyncio.get_event_loop().run_until_complete(hello())
         
