@@ -1,7 +1,8 @@
+import json
 from ResponseStrategy.Response import Response
 
 class CharResponse(Response):
-    message:str = ""
+    message:dict = None
     id:int = None
     
     def __init__(self, id:int) -> None:
@@ -9,4 +10,7 @@ class CharResponse(Response):
         pass
     
     async def messageSender(self, websocket):
-        await websocket.send("A " + str(self.id))
+        message = {"response":"confirmed",
+                   "charId":str(self.id)
+                   }
+        await websocket.send(json.dumps(message))
