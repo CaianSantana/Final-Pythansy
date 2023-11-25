@@ -18,9 +18,27 @@ cada letra deve simbolizar um evento
 
 <h3>Para o Server</h3>
 
-J -> Pedido para jogar deve seguir o formato "J name:{nome do jogador}\0"
+J -> Pedido para jogar deve seguir o formato:
+
+{
+    "action":"Join",
+    "nome":"Yasmin yaz bollaz"
+}
 
 C -> caracters -> "C id:{00} hp:{00} attack:{00} ability:{00} armor:{00} magicResistance:{00} speed:{00} mana:{00}"
+
+{
+    "action":"char",
+    "class":"empty",
+    "playerId":"0",
+    "hp":"25",
+    "attack":"30",
+    "ability":"12",
+    "armor":"10",
+    "magicResistance":"15",
+    "speed":"35",
+    "mana":"20"
+}
 
 H -> hit ou acerto formato "H from:{Id de quem acertou} with:{id do seu boneco} to:{Id do boneco do inimigo} Dano:{+00}"
 
