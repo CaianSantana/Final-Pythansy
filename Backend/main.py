@@ -14,7 +14,7 @@ game:Game = Game()
 #A conexao é passada como parametro
 async def echo(websocket):    
     client_host = websocket
-    print(client_host.remote_address[0]) #sabendo o ip de quem se conectou
+    print("Requiscao de:",client_host.remote_address[0]) #sabendo o ip de quem se conectou
     if(game.limiteDeJogadoresAtingido()):
         return websocket.send("Refused\nConexao lotada")
     async for message in websocket:
