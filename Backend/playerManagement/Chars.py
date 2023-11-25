@@ -1,5 +1,6 @@
 class Chars:    
     id = None
+    myClass = ""
     hp = 0
     mana = 0
     attack = 0
@@ -28,3 +29,6 @@ class Chars:
         
     def setId(self,id:int):
         self.id = id
+        
+    def getMyClass(self):
+        return self.myClass
