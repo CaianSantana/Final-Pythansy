@@ -42,6 +42,14 @@ C -> caracters -> "C id:{00} hp:{00} attack:{00} ability:{00} armor:{00} magicRe
 
 H -> hit ou acerto formato "H from:{Id de quem acertou} with:{id do seu boneco} to:{Id do boneco do inimigo} Dano:{+00}"
 
+{
+    "action":"hit",
+    "playerId":"0"
+    "with":"0"
+    "to":"0"
+    "dano":"10"
+}
+
 G -> me de as informacoes do adversario "????????????????? nao sei como fazer ainda"
 
 E -> fim da jogada fez todas as suas ações ou escolheu terminar
