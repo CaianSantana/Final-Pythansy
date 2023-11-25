@@ -1,7 +1,8 @@
 #Fazer outras classes herdarem e enviarem suas mensagens
+import json
 
 class Response:
-    message:str = ""
+    message:dict= None
     id:int = None
     
     def __init__(self, id:int) -> None:
@@ -9,4 +10,6 @@ class Response:
         pass
     
     async def messageSender(self, websocket):
-        await websocket.send("A " + str(self.id))
+        self.message = {"Response":"accepted",
+                        "playerId":str(self.id)}
+        await websocket.send(json.dumps(self.message))
