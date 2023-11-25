@@ -25,7 +25,7 @@ class HitMessageHandler:
         self.setWebSocket(websocket)
         if(await self.canIawnser(message)):
             self.parseMessage(message)
-            await self.sendResponse(HitResponse(int(message.get("playerId")),int(message.get("playerId"))))
+            await self.sendResponse(HitResponse(int(message.get("playerId")),int(message.get("playerId")),int(message.get("dano"))))
         pass
         
     async def sendResponse(self, response:Response):
