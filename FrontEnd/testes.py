@@ -5,7 +5,8 @@ from websockets.sync.client import connect
 import json
 
 async def hello():
-    with connect("ws://localhost:8080") as websocket:
+    port = 8752
+    with connect("ws://localhost:"+str(port)) as websocket:
         joinMessage = {
                 "action":"Join",
                 "nome":"Yasmin yaz bollaz"
