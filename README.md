@@ -11,6 +11,8 @@ precisamos de um loop no servidor
 Seguinte precisamos de um protocolo para este projeto.
 
 <h2>Run pip install websockets<h2>
+<h2>Run pip install pygame<h2>
+
 
 <H1>Rastle protocol</H1>
 
