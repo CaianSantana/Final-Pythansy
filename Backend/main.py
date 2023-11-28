@@ -1,4 +1,5 @@
 import asyncio 
+import json
 from websockets.server import serve
 from playerManagement.PlayerPy import PlayerPy
 from game.Game import Game
@@ -12,15 +13,17 @@ game:Game = Game()
 
 #A conexao é passada como parametro
 async def echo(websocket):    
+    client_host = websocket
+    print("Requiscao de:",client_host.remote_address[0]) #sabendo o ip de quem se conectou
     if(game.limiteDeJogadoresAtingido()):
         return websocket.send("Refused\nConexao lotada")
     async for message in websocket:
-        print(message)
-        await game.handleMessage(websocket,message)
+        playerMessage = json.loads(message)
+        await game.handleMessage(websocket,playerMessage)
     return
     
 async def start():
-    messageHandler = MessageHandler(game=game) 
+    MessageHandler(game=game) 
     async with serve(echo, "localhost", 8080):
         print("Python ta on")
         await asyncio.Future()

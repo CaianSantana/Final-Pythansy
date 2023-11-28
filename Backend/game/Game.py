@@ -9,23 +9,22 @@ class Game:
     def __init__(self) -> None:
         pass
     
-    def join(self,conexao):
+    def join(self,conexao, nome:str):
         if(self.playerJaEstaEmPartida(conexao)):    
             return    
-        playerPy = PlayerPy("playerName", conexao)
+        playerPy = PlayerPy(nome, conexao)
         playerPy.setId = len(self.playersPy) 
         self.playersPy.append(playerPy)
         print(len(self.playersPy))
+        print(playerPy.nome)
         return playerPy.playerId
            
-    def hit(self, atackerId:int,adversaryId:int,charId:int,target:id,dano:int):
-        playerId = atackerId
-        playerTargetId = adversaryId
-        print(len(self.playersPy))
-        atacante = self.getPlayer(playerId)
-        atacado = self.getPlayer(playerTargetId)
+    def hit(self, atackerId:int,adversaryId:int,charId:int,targetId:int,dano:int):
+        #print(len(self.playersPy))
+        atacante = self.getPlayer(atackerId)
+        atacado = self.getPlayer(adversaryId)
         charDoAtacante:Chars = atacante.getChar(charId)
-        charDoAtacado:Chars = atacado.getChar(target)
+        charDoAtacado:Chars = atacado.getChar(targetId)
         charDoAtacante.causeDano(charDoAtacado,dano)
         return
     

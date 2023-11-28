@@ -16,17 +16,17 @@ class MessageHandler:
     def setWebSocket(self,websocket):
         self.websocket = websocket
         
-    async def handleMessage(self, websocket,message):
+    async def handleMessage(self, websocket,message:dict):
         self.setWebSocket(websocket)
         if((await self.canIawnser(message))):
-            playerId = self.game.join(websocket)
+            playerId = self.game.join(websocket, message.get("nome"))
             await self.sendResponse(Response(playerId))
     
     async def sendResponse(self, response:Response):
         await response.messageSender(self.websocket)
     
-    async def canIawnser(self,message:str)-> bool:
-        if(not message[0] == "J"):
+    async def canIawnser(self,message:dict)-> bool:
+        if(not message.get("action") == "Join"):
             nextMessageHandler = HitMessageHandler(self.game,self.websocket)
             await nextMessageHandler.handleMessage(self.websocket,message)
             return False
