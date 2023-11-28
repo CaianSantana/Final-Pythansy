@@ -11,7 +11,7 @@ class Archer(Mob):
     def __init__(self, x, y):
         super().__init__(x, y)
         self.armor = 1
-        self.attack = 2
+        self.attack = 3
         self.speed = 3
         self.health = 22   
         self.projectile = None

@@ -4,6 +4,7 @@ from CombatMechanics.Combat import Combat
 from Models.States import States
 from Models.Characters.Wizard import Wizard
 from Models.Characters.Archer import Archer
+from Models.Characters.Warrior import Warrior
 import Models.Characters.Archer
 import Models.Characters.Wizard
 from Run.Player import Player
@@ -13,8 +14,8 @@ from Run.Player import Player
 class Main:
     
     def __init__(self):
-        self.player = Player([Wizard(3, 4), Wizard(5, 4), Archer(1, 4)])
-        self.enemychars = [Wizard(10, 4), Wizard(12, 4), Archer(14, 4)] 
+        self.player = Player([Wizard(3, 4), Warrior(5, 4), Archer(1, 4)])
+        self.enemychars = [Warrior(10, 4), Wizard(12, 4), Archer(14, 4)] 
         self.gameFont = pygame.font.Font('Game/Fonts/Pixeled.ttf', 15)
         self.level = "Dungeon"
         self.combat = Combat(self.player.chars, self.enemychars, self.gameFont, self.level)

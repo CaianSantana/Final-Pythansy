@@ -10,6 +10,6 @@ class States(Enum):
     MELEE = 6
     RANGED = 7
     CONJURING = 8
-    BLOCK=9
+    BLOCKING=9
 
     
