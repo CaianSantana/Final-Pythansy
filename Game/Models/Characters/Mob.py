@@ -125,10 +125,16 @@ class Mob():
         else:
             self.blink()
            
-       
+    
+    def trackProjectile(self): 
+        if self.projectile == True:
+            self.projectile = None
+            self.target.receiveDamage(self.ability, Damage.MAGICAL)
+            self.mana-=1
+            self.state = States.IDLE
         
     def blink(self):
-        self.countFlash = 20
+        self.countFlash = 10
         self.sprite = self.spriteDamaged
         
     def die(self):

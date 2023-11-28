@@ -3,6 +3,7 @@ import asyncio
 from Settings.Configuration import pygame, clock, SCREEN_UPDATE
 from Main import Main
 from API.MessageListener import MessageListener
+import sys
 pygame.init()
 mainGame = Main()
 messageListener:MessageListener = MessageListener(mainGame)
@@ -25,6 +26,6 @@ def start():
             clock.tick(60)   
 
 loop = asyncio.get_event_loop()
-thread = threading.Thread(target=serverStart,args=(loop,))
-thread.start()
+#thread = threading.Thread(target=serverStart,args=(loop,))
+#thread.start()
 start()

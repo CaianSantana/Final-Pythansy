@@ -24,7 +24,6 @@ class Wizard(Mob):
         super().draw()
         self.rect = pygame.Rect(self.pos.x*cellSize, self.pos.y*cellSize, cellSize, cellSize)
         screen.blit(self.sprite, self.rect)
-        
         if isinstance(self.projectile, Projectile):
             self.projectile.draw()
                 
