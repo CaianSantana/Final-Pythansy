@@ -12,7 +12,7 @@ class Warrior(Mob):
         self.armor = 2
         self.attack = 2
         self.speed = 2
-        self.health = 25       
+        self.health = 20      
         self.projectile = None
         self.className = "Warrior"
         self.spriteNormal = pygame.image.load("Game/Graphics/Warrior.png").convert_alpha()

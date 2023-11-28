@@ -10,7 +10,7 @@ class Mob():
         self.x = x
         self.y = y
         self.pos = Vector2(self.x, self.y)
-        self.health = 2
+        self.health = 10
         self.mana = 0
         self.attack = 2
         self.ability = 0

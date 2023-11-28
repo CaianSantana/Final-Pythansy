@@ -13,7 +13,7 @@ class Archer(Mob):
         self.armor = 1
         self.attack = 3
         self.speed = 3
-        self.health = 22   
+        self.health = 15  
         self.projectile = None
         self.prey=None
         self.className = "Archer"
